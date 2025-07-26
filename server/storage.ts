@@ -1,4 +1,6 @@
-import { type MedicalReport, type InsertMedicalReport, type MedicineSearch, type InsertMedicineSearch } from "@shared/schema";
+import { medicalReports, medicineSearches, type MedicalReport, type InsertMedicalReport, type MedicineSearch, type InsertMedicineSearch } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -9,6 +11,40 @@ export interface IStorage {
   // Medicine Searches
   createMedicineSearch(search: InsertMedicineSearch): Promise<MedicineSearch>;
   getMedicineSearch(medicineName: string): Promise<MedicineSearch | undefined>;
+}
+
+export class DatabaseStorage implements IStorage {
+  async createMedicalReport(insertReport: InsertMedicalReport): Promise<MedicalReport> {
+    const [report] = await db
+      .insert(medicalReports)
+      .values(insertReport)
+      .returning();
+    return report;
+  }
+
+  async getMedicalReport(id: string): Promise<MedicalReport | undefined> {
+    const [report] = await db
+      .select()
+      .from(medicalReports)
+      .where(eq(medicalReports.id, id));
+    return report || undefined;
+  }
+
+  async createMedicineSearch(insertSearch: InsertMedicineSearch): Promise<MedicineSearch> {
+    const [search] = await db
+      .insert(medicineSearches)
+      .values(insertSearch)
+      .returning();
+    return search;
+  }
+
+  async getMedicineSearch(medicineName: string): Promise<MedicineSearch | undefined> {
+    const [search] = await db
+      .select()
+      .from(medicineSearches)
+      .where(eq(medicineSearches.medicineName, medicineName));
+    return search || undefined;
+  }
 }
 
 export class MemStorage implements IStorage {
@@ -56,4 +92,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();

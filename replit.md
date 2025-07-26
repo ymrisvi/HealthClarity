@@ -31,11 +31,12 @@ The application follows a modern full-stack architecture with clear separation b
 
 ### Data Storage
 - **ORM**: Drizzle ORM configured for PostgreSQL
-- **Database**: PostgreSQL with Neon serverless provider
+- **Database**: PostgreSQL with Neon serverless provider (ACTIVE)
 - **Schema**: Defined in `shared/schema.ts` with two main tables:
   - `medical_reports`: Stores uploaded files, extracted text, and AI analysis
   - `medicine_searches`: Caches medicine lookup results
-- **Fallback**: In-memory storage implementation for development/testing
+- **Storage Implementation**: DatabaseStorage class for persistent data storage
+- **Fallback**: MemStorage class available for development/testing (not currently used)
 
 ### AI Integration Services
 - **OpenAI Integration**: GPT-4o model for medical report analysis and medicine information
