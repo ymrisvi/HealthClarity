@@ -7,9 +7,10 @@ import { Upload, FileText, Loader2 } from "lucide-react";
 
 interface FileUploadProps {
   onAnalysisComplete: (data: any) => void;
+  onError?: (error: Error) => void;
 }
 
-export default function FileUpload({ onAnalysisComplete }: FileUploadProps) {
+export default function FileUpload({ onAnalysisComplete, onError }: FileUploadProps) {
   const [dragOver, setDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -37,6 +38,7 @@ export default function FileUpload({ onAnalysisComplete }: FileUploadProps) {
         description: error.message,
         variant: "destructive",
       });
+      onError?.(error);
     },
   });
 

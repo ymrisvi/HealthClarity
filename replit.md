@@ -12,6 +12,11 @@ Preferred communication style: Simple, everyday language.
 
 The application follows a modern full-stack architecture with clear separation between frontend and backend components:
 
+### Authentication & Usage Control
+- **Replit Auth**: OpenID Connect integration for seamless user login
+- **Usage Limits**: Anonymous users get 1 free analysis, authenticated users have unlimited access
+- **Session Management**: PostgreSQL-backed session storage with automatic refresh tokens
+
 ### Frontend Architecture
 - **Framework**: React with TypeScript using Vite as the build tool
 - **Styling**: Tailwind CSS with shadcn/ui component library for consistent UI design
@@ -32,10 +37,12 @@ The application follows a modern full-stack architecture with clear separation b
 ### Data Storage
 - **ORM**: Drizzle ORM configured for PostgreSQL
 - **Database**: PostgreSQL with Neon serverless provider (ACTIVE)
-- **Schema**: Defined in `shared/schema.ts` with two main tables:
-  - `medical_reports`: Stores uploaded files, extracted text, and AI analysis
-  - `medicine_searches`: Caches medicine lookup results
-- **Storage Implementation**: DatabaseStorage class for persistent data storage
+- **Schema**: Defined in `shared/schema.ts` with user-linked data:
+  - `users`: Stores user profile information from Replit Auth
+  - `sessions`: Session storage for authentication persistence
+  - `medical_reports`: User-linked medical reports with analysis results
+  - `medicine_searches`: User-linked medicine lookup cache
+- **Storage Implementation**: DatabaseStorage class with user relationship tracking
 - **Fallback**: MemStorage class available for development/testing (not currently used)
 
 ### AI Integration Services
@@ -50,7 +57,11 @@ The application follows a modern full-stack architecture with clear separation b
 
 ### UI Components
 - **shadcn/ui**: Complete component library with Radix UI primitives
-- **Custom Components**: 
+- **Authentication Components**:
+  - `AuthBanner`: Usage limit warnings and login prompts
+  - `UserHeader`: User profile display with dropdown menu
+  - `HistoryView`: Complete analysis history with timestamps
+- **Core Components**: 
   - `FileUpload`: Drag-and-drop file upload with validation
   - `MedicineSearch`: Medicine lookup with search suggestions
   - `ResultsDisplay`: Structured display of AI analysis results
@@ -58,11 +69,15 @@ The application follows a modern full-stack architecture with clear separation b
 
 ## Data Flow
 
-1. **File Upload Flow**: User uploads medical report → File validation → Text extraction (OCR/AI) → AI analysis → Structured response → Database storage → UI display
+1. **Authentication Flow**: User visits site → Replit Auth redirect (if needed) → User profile creation/update → Session establishment → Access granted
 
-2. **Medicine Search Flow**: User enters medicine name → API request → Check cache → OpenAI query (if not cached) → Structured medicine information → Cache result → UI display
+2. **Usage Control Flow**: Anonymous user action → Check session usage count → Allow if under limit OR prompt for login → Track usage if allowed
 
-3. **Data Persistence**: All interactions are stored in PostgreSQL with JSON fields for structured AI responses, enabling result caching and historical access
+3. **File Upload Flow**: User uploads medical report → Usage limit check → File validation → Text extraction (OCR/AI) → AI analysis → User-linked database storage → UI display
+
+4. **Medicine Search Flow**: User enters medicine name → Usage limit check → API request → Check cache → OpenAI query (if not cached) → User-linked cache storage → UI display
+
+5. **History Access Flow**: Authenticated user → Fetch user-linked reports and searches → Display chronologically with timestamps → Allow result re-viewing
 
 ## External Dependencies
 

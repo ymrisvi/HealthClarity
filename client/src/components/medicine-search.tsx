@@ -8,9 +8,10 @@ import { Search, Loader2 } from "lucide-react";
 
 interface MedicineSearchProps {
   onSearchComplete: (data: any) => void;
+  onError?: (error: Error) => void;
 }
 
-export default function MedicineSearch({ onSearchComplete }: MedicineSearchProps) {
+export default function MedicineSearch({ onSearchComplete, onError }: MedicineSearchProps) {
   const [query, setQuery] = useState("");
   const { toast } = useToast();
 
@@ -39,6 +40,7 @@ export default function MedicineSearch({ onSearchComplete }: MedicineSearchProps
         description: error.message,
         variant: "destructive",
       });
+      onError?.(error);
     },
   });
 

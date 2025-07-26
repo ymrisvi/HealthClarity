@@ -5,6 +5,7 @@ import { storage } from "./storage";
 import { insertMedicalReportSchema, insertMedicineSearchSchema } from "@shared/schema";
 import { analyzeMedicalReport, analyzeMedicalImage, getMedicineInformation } from "./services/openai";
 import { extractTextFromImage } from "./services/ocr";
+import { setupAuth, isAuthenticated } from "./replitAuth";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -21,10 +22,73 @@ const upload = multer({
   },
 });
 
+// Middleware to check usage limits for anonymous users
+const checkUsageLimit = async (req: any, res: any, next: any) => {
+  if (req.isAuthenticated()) {
+    return next(); // Authenticated users have unlimited access
+  }
+
+  const sessionId = req.sessionID;
+  const usageCount = await storage.getAnonymousUsageCount(sessionId);
+  
+  if (usageCount >= 1) {
+    return res.status(403).json({ 
+      message: "You've reached the limit for anonymous usage. Please sign in to continue using the service.",
+      requiresAuth: true
+    });
+  }
+  
+  next();
+};
+
 export async function registerRoutes(app: Express): Promise<Server> {
   
+  // Auth middleware
+  await setupAuth(app);
+
+  // Auth routes
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
+  // User history routes
+  app.get('/api/user/history', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const [medicalReports, medicineSearches] = await Promise.all([
+        storage.getUserMedicalReports(userId),
+        storage.getUserMedicineSearches(userId)
+      ]);
+      
+      res.json({
+        medicalReports: medicalReports.map(report => ({
+          id: report.id,
+          fileName: report.fileName,
+          analysis: report.analysis,
+          createdAt: report.createdAt
+        })),
+        medicineSearches: medicineSearches.map(search => ({
+          id: search.id,
+          medicineName: search.medicineName,
+          searchResult: search.searchResult,
+          createdAt: search.createdAt
+        }))
+      });
+    } catch (error) {
+      console.error("Error fetching user history:", error);
+      res.status(500).json({ message: "Failed to fetch user history" });
+    }
+  });
+
   // Upload and analyze medical report
-  app.post("/api/reports/upload", upload.single('file'), async (req, res) => {
+  app.post("/api/reports/upload", checkUsageLimit, upload.single('file'), async (req: any, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ message: "No file uploaded" });
@@ -65,8 +129,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Analyze the extracted text
       const analysis = await analyzeMedicalReport(extractedText);
 
+      // Get user ID if authenticated, otherwise null
+      const userId = req.isAuthenticated() ? req.user.claims.sub : null;
+      
       // Store the report
       const reportData = insertMedicalReportSchema.parse({
+        userId,
         fileName: originalname,
         fileType: mimetype,
         extractedText,
@@ -74,6 +142,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       const savedReport = await storage.createMedicalReport(reportData);
+
+      // Track usage for anonymous users
+      if (!req.isAuthenticated()) {
+        await storage.incrementAnonymousUsage(req.sessionID);
+      }
 
       res.json({
         reportId: savedReport.id,
@@ -112,7 +185,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Search medicine information
-  app.post("/api/medicines/search", async (req, res) => {
+  app.post("/api/medicines/search", checkUsageLimit, async (req: any, res) => {
     try {
       const { medicineName } = req.body;
       
@@ -139,13 +212,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get medicine information from OpenAI
       const medicineInfo = await getMedicineInformation(cleanedName);
 
+      // Get user ID if authenticated, otherwise null
+      const userId = req.isAuthenticated() ? req.user.claims.sub : null;
+
       // Store the search result
       const searchData = insertMedicineSearchSchema.parse({
+        userId,
         medicineName: cleanedName,
         searchResult: medicineInfo,
       });
 
       const savedSearch = await storage.createMedicineSearch(searchData);
+
+      // Track usage for anonymous users
+      if (!req.isAuthenticated()) {
+        await storage.incrementAnonymousUsage(req.sessionID);
+      }
 
       res.json({
         searchId: savedSearch.id,

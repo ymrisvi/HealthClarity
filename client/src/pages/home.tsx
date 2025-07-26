@@ -3,22 +3,43 @@ import FileUpload from "@/components/file-upload";
 import MedicineSearch from "@/components/medicine-search";
 import ResultsDisplay from "@/components/results-display";
 import MedicalDisclaimer from "@/components/medical-disclaimer";
+import AuthBanner from "@/components/auth-banner";
+import UserHeader from "@/components/user-header";
+import HistoryView from "@/components/history-view";
 import { Card } from "@/components/ui/card";
 import { FileText, Search, Shield, Info, Users, Lock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { isUsageLimitError } from "@/lib/authUtils";
 
 export default function Home() {
   const [activeResult, setActiveResult] = useState<{
     type: 'report' | 'medicine';
     data: any;
   } | null>(null);
+  const [showHistory, setShowHistory] = useState(false);
+  const [usageLimitReached, setUsageLimitReached] = useState(false);
+  
+  const { isAuthenticated } = useAuth();
 
   const handleReportAnalysis = (data: any) => {
     setActiveResult({ type: 'report', data });
+    setUsageLimitReached(false);
   };
 
   const handleMedicineResult = (data: any) => {
     setActiveResult({ type: 'medicine', data });
+    setUsageLimitReached(false);
   };
+
+  const handleError = (error: Error) => {
+    if (isUsageLimitError(error)) {
+      setUsageLimitReached(true);
+    }
+  };
+
+  if (showHistory) {
+    return <HistoryView onClose={() => setShowHistory(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -35,17 +56,20 @@ export default function Home() {
                 <p className="text-sm text-slate-600">Understanding medical reports made simple</p>
               </div>
             </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#upload" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
-                Upload Report
-              </a>
-              <a href="#medicine" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
-                Medicine Lookup
-              </a>
-              <a href="#about" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
-                About
-              </a>
-            </nav>
+            <div className="flex items-center space-x-6">
+              <nav className="hidden md:flex space-x-8">
+                <a href="#upload" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
+                  Upload Report
+                </a>
+                <a href="#medicine" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
+                  Medicine Lookup
+                </a>
+                <a href="#about" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
+                  About
+                </a>
+              </nav>
+              <UserHeader onShowHistory={() => setShowHistory(true)} />
+            </div>
           </div>
         </div>
       </header>
@@ -55,6 +79,13 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        {/* Authentication Banner */}
+        {usageLimitReached ? (
+          <AuthBanner showLoginPrompt={true} />
+        ) : !isAuthenticated ? (
+          <AuthBanner remainingUses={1} />
+        ) : null}
         
         {/* Hero Section */}
         <div className="text-center mb-12">
@@ -79,7 +110,10 @@ export default function Home() {
               </div>
             </div>
 
-            <FileUpload onAnalysisComplete={handleReportAnalysis} />
+            <FileUpload 
+              onAnalysisComplete={handleReportAnalysis} 
+              onError={handleError}
+            />
           </Card>
 
           {/* Medicine Lookup */}
@@ -94,7 +128,10 @@ export default function Home() {
               </div>
             </div>
 
-            <MedicineSearch onSearchComplete={handleMedicineResult} />
+            <MedicineSearch 
+              onSearchComplete={handleMedicineResult}
+              onError={handleError}
+            />
           </Card>
         </div>
 
