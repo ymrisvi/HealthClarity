@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- ECG Grid Background -->
+  <defs>
+    <pattern id="smallGrid" width="5" height="5" patternUnits="userSpaceOnUse">
+      <path d="M 5 0 L 0 0 0 5" fill="none" stroke="#ffcccc" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse">
+      <rect width="25" height="25" fill="url(#smallGrid)"/>
+      <path d="M 25 0 L 0 0 0 25" fill="none" stroke="#ff9999" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="white"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+  
+  <!-- Header -->
+  <text x="40" y="35" font-family="Arial, sans-serif" font-size="16" font-weight="bold">ELECTROCARDIOGRAM REPORT</text>
+  
+  <!-- Patient Info -->
+  <text x="40" y="55" font-family="Arial, sans-serif" font-size="12">Patient: McKee, Willy</text>
+  <text x="200" y="55" font-family="Arial, sans-serif" font-size="12">DOB: 01/25/1950</text>
+  <text x="350" y="55" font-family="Arial, sans-serif" font-size="12">ID: 123123</text>
+  
+  <text x="40" y="70" font-family="Arial, sans-serif" font-size="12">Gender: Male</text>
+  <text x="200" y="70" font-family="Arial, sans-serif" font-size="12">Date: 02/17/2011</text>
+  <text x="350" y="70" font-family="Arial, sans-serif" font-size="12">Time: 2:21:27 PM</text>
+  
+  <!-- ECG Leads Labels -->
+  <text x="40" y="110" font-family="Arial, sans-serif" font-size="10" font-weight="bold">I</text>
+  <text x="40" y="160" font-family="Arial, sans-serif" font-size="10" font-weight="bold">II</text>
+  <text x="40" y="210" font-family="Arial, sans-serif" font-size="10" font-weight="bold">III</text>
+  <text x="40" y="260" font-family="Arial, sans-serif" font-size="10" font-weight="bold">aVR</text>
+  
+  <text x="280" y="110" font-family="Arial, sans-serif" font-size="10" font-weight="bold">aVL</text>
+  <text x="280" y="160" font-family="Arial, sans-serif" font-size="10" font-weight="bold">aVF</text>
+  <text x="280" y="210" font-family="Arial, sans-serif" font-size="10" font-weight="bold">V1</text>
+  <text x="280" y="260" font-family="Arial, sans-serif" font-size="10" font-weight="bold">V2</text>
+  
+  <text x="520" y="110" font-family="Arial, sans-serif" font-size="10" font-weight="bold">V3</text>
+  <text x="520" y="160" font-family="Arial, sans-serif" font-size="10" font-weight="bold">V4</text>
+  <text x="520" y="210" font-family="Arial, sans-serif" font-size="10" font-weight="bold">V5</text>
+  <text x="520" y="260" font-family="Arial, sans-serif" font-size="10" font-weight="bold">V6</text>
+  
+  <!-- Sample ECG Waveforms -->
+  <!-- Lead I -->
+  <path d="M60,120 L65,120 L67,115 L70,125 L73,110 L76,120 L80,120 L85,120 L87,115 L90,125 L93,110 L96,120 L100,120 L105,120 L107,115 L110,125 L113,110 L116,120 L120,120" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  
+  <!-- Lead II -->
+  <path d="M60,170 L65,170 L67,165 L70,175 L73,160 L76,170 L80,170 L85,170 L87,165 L90,175 L93,160 L96,170 L100,170 L105,170 L107,165 L110,175 L113,160 L116,170 L120,170" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  
+  <!-- Lead III -->
+  <path d="M60,220 L65,220 L67,215 L70,225 L73,210 L76,220 L80,220 L85,220 L87,215 L90,225 L93,210 L96,220 L100,220 L105,220 L107,215 L110,225 L113,210 L116,220 L120,220" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  
+  <!-- Lead aVR -->
+  <path d="M60,270 L65,270 L67,275 L70,265 L73,280 L76,270 L80,270 L85,270 L87,275 L90,265 L93,280 L96,270 L100,270 L105,270 L107,275 L110,265 L113,280 L116,270 L120,270" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  
+  <!-- Additional leads with similar patterns -->
+  <path d="M300,120 L305,120 L307,115 L310,125 L313,110 L316,120 L320,120 L325,120 L327,115 L330,125 L333,110 L336,120 L340,120" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  <path d="M300,170 L305,170 L307,165 L310,175 L313,160 L316,170 L320,170 L325,170 L327,165 L330,175 L333,160 L336,170 L340,170" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  <path d="M300,220 L305,220 L307,215 L310,225 L313,210 L316,220 L320,220 L325,220 L327,215 L330,225 L333,210 L336,220 L340,220" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  <path d="M300,270 L305,270 L307,265 L310,275 L313,260 L316,270 L320,270 L325,270 L327,265 L330,275 L333,260 L336,270 L340,270" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  
+  <path d="M540,120 L545,120 L547,115 L550,125 L553,110 L556,120 L560,120 L565,120 L567,115 L570,125 L573,110 L576,120 L580,120" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  <path d="M540,170 L545,170 L547,165 L550,175 L553,160 L556,170 L560,170 L565,170 L567,165 L570,175 L573,160 L576,170 L580,170" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  <path d="M540,220 L545,220 L547,215 L550,225 L553,210 L556,220 L560,220 L565,220 L567,215 L570,225 L573,210 L576,220 L580,220" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  <path d="M540,270 L545,270 L547,265 L550,275 L553,260 L556,270 L560,270 L565,270 L567,265 L570,275 L573,260 L576,270 L580,270" 
+        fill="none" stroke="black" stroke-width="1.5"/>
+  
+  <!-- Measurements Section -->
+  <rect x="40" y="320" width="720" height="180" fill="#f8f8f8" stroke="#ccc" stroke-width="1"/>
+  <text x="50" y="340" font-family="Arial, sans-serif" font-size="14" font-weight="bold">MEASUREMENTS:</text>
+  
+  <text x="50" y="360" font-family="Arial, sans-serif" font-size="12">Heart Rate: 80 bpm</text>
+  <text x="200" y="360" font-family="Arial, sans-serif" font-size="12">PR Interval: 186 ms</text>
+  <text x="350" y="360" font-family="Arial, sans-serif" font-size="12">QRS Duration: 100 ms</text>
+  <text x="500" y="360" font-family="Arial, sans-serif" font-size="12">QT Interval: 360 ms</text>
+  
+  <text x="50" y="380" font-family="Arial, sans-serif" font-size="12">P Duration: 102 ms</text>
+  <text x="200" y="380" font-family="Arial, sans-serif" font-size="12">QTc Interval: 416 ms</text>
+  <text x="350" y="380" font-family="Arial, sans-serif" font-size="12">P Axis: 49°</text>
+  <text x="500" y="380" font-family="Arial, sans-serif" font-size="12">QRS Axis: 50°</text>
+  
+  <text x="50" y="410" font-family="Arial, sans-serif" font-size="14" font-weight="bold">INTERPRETATION:</text>
+  <text x="50" y="430" font-family="Arial, sans-serif" font-size="12">• Normal sinus rhythm</text>
+  <text x="50" y="450" font-family="Arial, sans-serif" font-size="12">• Anteroseptal infarction, probably old</text>
+  <text x="50" y="470" font-family="Arial, sans-serif" font-size="12">• Ischemic ST-T changes in posterior leads</text>
+  
+  <!-- Footer -->
+  <text x="40" y="530" font-family="Arial, sans-serif" font-size="10">Scale: 25.0 mm/s, 10.0 mm/mV</text>
+  <text x="300" y="530" font-family="Arial, sans-serif" font-size="10">Filters: 0.05-150 Hz</text>
+  <text x="500" y="530" font-family="Arial, sans-serif" font-size="10">Reviewed by qualified physician</text>
+</svg>
