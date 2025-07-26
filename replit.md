@@ -13,9 +13,10 @@ Preferred communication style: Simple, everyday language.
 The application follows a modern full-stack architecture with clear separation between frontend and backend components:
 
 ### Authentication & Usage Control
-- **Replit Auth**: OpenID Connect integration for seamless user login
+- **Replit Auth**: OpenID Connect integration with social login support (Google, GitHub, X/Twitter, Apple, Email)
 - **Usage Limits**: Anonymous users get 1 free analysis, authenticated users have unlimited access
 - **Session Management**: PostgreSQL-backed session storage with automatic refresh tokens
+- **Social Login UI**: Enhanced login interface showcasing available social authentication providers
 
 ### Frontend Architecture
 - **Framework**: React with TypeScript using Vite as the build tool
@@ -58,9 +59,11 @@ The application follows a modern full-stack architecture with clear separation b
 ### UI Components
 - **shadcn/ui**: Complete component library with Radix UI primitives
 - **Authentication Components**:
-  - `AuthBanner`: Usage limit warnings and login prompts
+  - `SocialLoginBanner`: Enhanced social login interface with provider icons and benefits
+  - `AuthBanner`: Usage limit warnings and login prompts (now uses SocialLoginBanner)
   - `UserHeader`: User profile display with dropdown menu
   - `HistoryView`: Complete analysis history with timestamps
+  - `Landing`: Dedicated landing page for anonymous users showcasing social login options
 - **Core Components**: 
   - `FileUpload`: Drag-and-drop file upload with validation
   - `MedicineSearch`: Medicine lookup with search suggestions

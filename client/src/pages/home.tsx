@@ -6,6 +6,7 @@ import MedicalDisclaimer from "@/components/medical-disclaimer";
 import AuthBanner from "@/components/auth-banner";
 import UserHeader from "@/components/user-header";
 import HistoryView from "@/components/history-view";
+import SocialLoginBanner from "@/components/social-login-banner";
 import { Card } from "@/components/ui/card";
 import { FileText, Search, Shield, Info, Users, Lock } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -39,6 +40,63 @@ export default function Home() {
 
   if (showHistory) {
     return <HistoryView onClose={() => setShowHistory(false)} />;
+  }
+
+  // Show a compact version for authenticated users who might want to try the service
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-slate-100">
+        <SocialLoginBanner 
+          title="Try Our Medical Report Assistant"
+          description="Get one free analysis or sign in for unlimited access to medical report analysis and medicine information"
+        />
+        
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="p-8 shadow-lg border border-slate-200">
+              <div className="flex items-center mb-4">
+                <div className="bg-medical-blue/10 p-3 rounded-xl mr-4">
+                  <FileText className="w-8 h-8 text-medical-blue" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">Upload Medical Report</h3>
+                  <p className="text-slate-600">Get simple explanations of your lab results</p>
+                </div>
+              </div>
+              <FileUpload 
+                onAnalysisComplete={handleReportAnalysis} 
+                onError={handleError}
+              />
+            </Card>
+
+            <Card className="p-8 shadow-lg border border-slate-200">
+              <div className="flex items-center mb-4">
+                <div className="bg-healthcare-teal/10 p-3 rounded-xl mr-4">
+                  <Search className="w-8 h-8 text-healthcare-teal" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">Medicine Lookup</h3>
+                  <p className="text-slate-600">Learn about medicines in simple terms</p>
+                </div>
+              </div>
+              <MedicineSearch 
+                onSearchComplete={handleMedicineResult}
+                onError={handleError}
+              />
+            </Card>
+          </div>
+
+          {/* Results Section */}
+          {activeResult && (
+            <ResultsDisplay 
+              type={activeResult.type}
+              data={activeResult.data}
+              onClose={() => setActiveResult(null)}
+            />
+          )}
+        </div>
+      </div>
+    );
   }
 
   return (

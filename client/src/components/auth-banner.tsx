@@ -2,6 +2,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { LogIn, Info } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import SocialLoginBanner from "./social-login-banner";
 
 interface AuthBannerProps {
   remainingUses?: number;
@@ -15,38 +16,19 @@ export default function AuthBanner({ remainingUses = 1, showLoginPrompt = false 
 
   if (showLoginPrompt) {
     return (
-      <Alert className="bg-amber-50 border-amber-200 mb-6">
-        <LogIn className="h-4 w-4" />
-        <AlertDescription className="flex items-center justify-between">
-          <span>
-            You've reached the limit for anonymous usage. Sign in to continue analyzing medical reports and searching medicines.
-          </span>
-          <Button 
-            onClick={() => window.location.href = '/api/login'}
-            className="bg-medical-blue hover:bg-blue-700 text-white ml-4"
-          >
-            Sign In
-          </Button>
-        </AlertDescription>
-      </Alert>
+      <SocialLoginBanner 
+        title="Usage limit reached"
+        description="Sign in with your preferred social account to continue using our service"
+        showCompact={false}
+      />
     );
   }
 
   return (
-    <Alert className="bg-blue-50 border-blue-200 mb-6">
-      <Info className="h-4 w-4" />
-      <AlertDescription className="flex items-center justify-between">
-        <span>
-          You have {remainingUses} free analysis remaining. Sign in to get unlimited access and save your history.
-        </span>
-        <Button 
-          variant="outline"
-          onClick={() => window.location.href = '/api/login'}
-          className="border-medical-blue text-medical-blue hover:bg-medical-blue hover:text-white ml-4"
-        >
-          Sign In
-        </Button>
-      </AlertDescription>
-    </Alert>
+    <SocialLoginBanner 
+      title="Get unlimited access"
+      description={`You have ${remainingUses} free analysis remaining. Sign in to unlock unlimited usage and personal history tracking.`}
+      showCompact={true}
+    />
   );
 }
