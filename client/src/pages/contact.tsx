@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import SEOHead from "@/components/seo-head";
 import { Mail, ArrowLeft, Heart, Copy, ExternalLink } from "lucide-react";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
@@ -24,6 +25,13 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen medical-pattern medical-gradient">
+      <SEOHead 
+        title="Contact Health Clarity - Get Support & Medical AI Help"
+        description="Contact Health Clarity for support with AI-powered medical report analysis and medicine information. Get help with lab results, X-rays, ECGs, and health technology questions."
+        keywords="Health Clarity contact, medical AI support, healthcare technology help, medical report analysis support"
+        canonical="https://healthclarity.replit.app/contact"
+      />
+      
       {/* Mobile Responsive Header */}
       <header className="glass-effect border-b border-white/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">

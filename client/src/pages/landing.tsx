@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import SocialLoginBanner from "@/components/social-login-banner";
 import MedicalDisclaimer from "@/components/medical-disclaimer";
 import MedicalHeroSection from "@/components/medical-hero-section";
+import SEOHead from "@/components/seo-head";
 import { FileText, Search, Shield, Users, Zap, Clock, Activity, Heart, Stethoscope, ChevronRight } from "lucide-react";
 import { useLocation } from "wouter";
 
@@ -15,6 +16,13 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen medical-bg-pattern">
+      <SEOHead 
+        title="Health Clarity - AI Medical Report Analysis & Medicine Information"
+        description="Transform complex medical reports into simple explanations with AI. Get instant analysis of lab results, X-rays, ECGs, and comprehensive medicine information for your entire family. Free to start."
+        keywords="medical report analysis, AI medical assistant, lab results explained, ECG analysis, X-ray interpretation, blood test results, medicine information, family health tracking, telemedicine, health technology"
+        canonical="https://healthclarity.replit.app/"
+      />
+      
       {/* Enhanced Header - Mobile Responsive */}
       <header className="glass-effect sticky top-0 z-50 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -49,6 +49,16 @@ const checkUsageLimit = async (req: any, res: any, next: any) => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // SEO Routes - Serve sitemap and robots.txt
+  app.get('/sitemap.xml', (req, res) => {
+    res.set('Content-Type', 'text/xml');
+    res.sendFile('sitemap.xml', { root: 'client/public' });
+  });
+
+  app.get('/robots.txt', (req, res) => {
+    res.set('Content-Type', 'text/plain');
+    res.sendFile('robots.txt', { root: 'client/public' });
+  });
   
   // Auth middleware
   await setupAuth(app);

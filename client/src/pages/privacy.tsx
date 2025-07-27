@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Shield, Lock, Eye, Database, FileText, Users } from "lucide-react";
+import SEOHead from "@/components/seo-head";
+import { Shield, Lock, Eye, Database, FileText, Users, ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function Privacy() {
@@ -8,6 +9,13 @@ export default function Privacy() {
 
   return (
     <div className="min-h-screen medical-pattern medical-gradient">
+      <SEOHead 
+        title="Privacy Policy - Health Clarity Medical AI Platform"
+        description="Learn how Health Clarity protects your medical data and personal information. Comprehensive privacy policy for AI-powered medical report analysis and family health tracking."
+        keywords="privacy policy, data protection, medical privacy, health information security, HIPAA compliance"
+        canonical="https://healthclarity.replit.app/privacy"
+      />
+      
       {/* Mobile Responsive Header */}
       <header className="glass-effect border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">

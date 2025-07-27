@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import SEOHead from "@/components/seo-head";
 import { FileText, AlertTriangle, Scale, Clock, Shield, Users } from "lucide-react";
 import { useLocation } from "wouter";
 
@@ -8,6 +9,13 @@ export default function Terms() {
 
   return (
     <div className="min-h-screen medical-pattern medical-gradient">
+      <SEOHead 
+        title="Terms of Service - Health Clarity AI Medical Platform"
+        description="Read the terms of service for Health Clarity AI-powered medical report analysis. Understand your rights and obligations when using our medical AI technology."
+        keywords="terms of service, medical AI terms, healthcare platform agreement, AI medical analysis terms"
+        canonical="https://healthclarity.replit.app/terms"
+      />
+      
       {/* Header */}
       <header className="glass-effect border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

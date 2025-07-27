@@ -9,6 +9,7 @@ import AuthBanner from "@/components/auth-banner";
 import UserHeader from "@/components/user-header";
 import HistoryView from "@/components/history-view";
 import SocialLoginBanner from "@/components/social-login-banner";
+import SEOHead from "@/components/seo-head";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, Search, Shield, Info, Users, Lock, Activity, Heart } from "lucide-react";
@@ -54,6 +55,13 @@ export default function Home() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-slate-100">
+        <SEOHead 
+          title="Health Clarity - AI Medical Report Analysis Dashboard"
+          description="Access your personalized Health Clarity dashboard for AI-powered medical report analysis, medicine information, and family health tracking. Sign in to manage your health data."
+          keywords="medical dashboard, health tracking, AI medical analysis, personal health records"
+          canonical="https://healthclarity.replit.app/"
+        />
+        
         <SocialLoginBanner 
           title="Try Health Clarity"
           description="Get one free analysis or sign in for unlimited access to Health Clarity's medical report analysis and medicine information"
@@ -109,6 +117,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen medical-pattern medical-gradient">
+      <SEOHead 
+        title="Health Clarity Dashboard - Your Medical AI Assistant"
+        description="Manage your family's health with AI-powered medical report analysis, medicine information, and personalized health tracking. Upload documents and get instant explanations."
+        keywords="health dashboard, medical AI, family health tracking, personal health management, medical analysis tools"
+        canonical="https://healthclarity.replit.app/"
+      />
+      
       {/* Enhanced Header - Mobile Responsive */}
       <header className="glass-effect border-b border-white/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
