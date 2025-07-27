@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Upload, FileText, AlertCircle, User } from "lucide-react";
+import { Upload, FileText, AlertCircle, User, Camera, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -26,8 +26,24 @@ export function FileUploadWithPerson({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [personId, setPersonId] = useState<string>(selectedPersonId || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const { toast } = useToast();
   const { isAuthenticated } = useAuth();
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+        ('ontouchstart' in window) ||
+        (window.innerWidth <= 768);
+      setIsMobile(isMobileDevice);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { data: persons = [] } = useQuery<Person[]>({
     queryKey: ["/api/persons"],
@@ -140,6 +156,18 @@ export function FileUploadWithPerson({
     onPersonSelect?.(actualPersonId);
   };
 
+  const handleCameraCapture = () => {
+    if (cameraInputRef.current) {
+      cameraInputRef.current.click();
+    }
+  };
+
+  const handleCameraInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      handleFileSelect(e.target.files[0]);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Person Selection - Only show for authenticated users */}
@@ -190,7 +218,10 @@ export function FileUploadWithPerson({
                 Upload Medical Report
               </h3>
               <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                Drag and drop your medical report or click to browse
+                {isMobile 
+                  ? "Drag and drop, choose a file, or take a photo of your medical report"
+                  : "Drag and drop your medical report or click to browse"
+                }
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-500">
                 Supports JPEG, PNG, SVG, and PDF files up to 10MB
@@ -206,6 +237,25 @@ export function FileUploadWithPerson({
                 <span className="text-xs text-slate-500">
                   ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
                 </span>
+              </div>
+            ) : isMobile ? (
+              <div className="flex gap-3 flex-col sm:flex-row">
+                <Button
+                  variant="outline"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 dark:hover:bg-blue-950/20"
+                >
+                  <Upload className="w-4 h-4 mr-2" />
+                  Choose File
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleCameraCapture}
+                  className="border-green-200 text-green-700 hover:bg-green-50 dark:border-green-800 dark:text-green-300 dark:hover:bg-green-950/20"
+                >
+                  <Camera className="w-4 h-4 mr-2" />
+                  Take Photo
+                </Button>
               </div>
             ) : (
               <Button
@@ -224,6 +274,16 @@ export function FileUploadWithPerson({
               className="hidden"
               accept=".jpg,.jpeg,.png,.svg,.pdf"
               onChange={handleFileInputChange}
+            />
+            
+            {/* Camera input for mobile */}
+            <input
+              ref={cameraInputRef}
+              type="file"
+              className="hidden"
+              accept="image/*"
+              capture="environment"
+              onChange={handleCameraInputChange}
             />
           </div>
         </CardContent>
