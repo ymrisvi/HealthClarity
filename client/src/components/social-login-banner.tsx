@@ -23,15 +23,16 @@ export default function SocialLoginBanner({
   if (showCompact) {
     return (
       <Alert className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 mb-6">
-        <LogIn className="h-4 w-4" />
-        <AlertDescription className="flex items-center justify-between">
-          <div>
-            <div className="font-medium text-slate-900">{title}</div>
-            <div className="text-sm text-slate-600">{description}</div>
+        <LogIn className="h-4 w-4 flex-shrink-0" />
+        <AlertDescription className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="font-medium text-slate-900 text-sm sm:text-base">{title}</div>
+            <div className="text-xs sm:text-sm text-slate-600 break-words">{description}</div>
           </div>
           <Button 
             onClick={handleLogin}
-            className="bg-medical-blue hover:bg-blue-700 text-white ml-4"
+            size="sm"
+            className="bg-medical-blue hover:bg-blue-700 text-white flex-shrink-0 w-full sm:w-auto"
           >
             Sign In
           </Button>
@@ -42,37 +43,37 @@ export default function SocialLoginBanner({
 
   return (
     <Card className="bg-gradient-to-br from-slate-50 to-blue-50 border border-slate-200 shadow-lg mb-8">
-      <div className="p-8 text-center">
-        <div className="bg-medical-blue/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <LogIn className="w-8 h-8 text-medical-blue" />
+      <div className="p-4 sm:p-6 lg:p-8 text-center">
+        <div className="bg-medical-blue/10 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+          <LogIn className="w-6 h-6 sm:w-8 sm:h-8 text-medical-blue" />
         </div>
         
-        <h3 className="text-2xl font-bold text-slate-900 mb-2">{title}</h3>
-        <p className="text-slate-600 mb-6">{description}</p>
+        <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 px-2">{title}</h3>
+        <p className="text-sm sm:text-base text-slate-600 mb-4 sm:mb-6 px-2">{description}</p>
         
-        {/* Social Login Options Display */}
+        {/* Social Login Options Display - Mobile Responsive */}
         <div className="mb-6">
           <p className="text-sm text-slate-500 mb-4">Available login methods:</p>
-          <div className="flex justify-center items-center space-x-4 mb-6">
-            <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg shadow-sm border">
-              <FaGoogle className="w-5 h-5 text-red-500" />
-              <span className="text-sm font-medium text-slate-700">Google</span>
+          <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-6 max-w-lg mx-auto">
+            <div className="flex items-center space-x-2 bg-white px-2 sm:px-3 py-2 rounded-lg shadow-sm border whitespace-nowrap">
+              <FaGoogle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium text-slate-700">Google</span>
             </div>
-            <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg shadow-sm border">
-              <Github className="w-5 h-5 text-slate-700" />
-              <span className="text-sm font-medium text-slate-700">GitHub</span>
+            <div className="flex items-center space-x-2 bg-white px-2 sm:px-3 py-2 rounded-lg shadow-sm border whitespace-nowrap">
+              <Github className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium text-slate-700">GitHub</span>
             </div>
-            <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg shadow-sm border">
-              <FaXTwitter className="w-5 h-5 text-slate-700" />
-              <span className="text-sm font-medium text-slate-700">X</span>
+            <div className="flex items-center space-x-2 bg-white px-2 sm:px-3 py-2 rounded-lg shadow-sm border whitespace-nowrap">
+              <FaXTwitter className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium text-slate-700">X</span>
             </div>
-            <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg shadow-sm border">
-              <FaApple className="w-5 h-5 text-slate-700" />
-              <span className="text-sm font-medium text-slate-700">Apple</span>
+            <div className="flex items-center space-x-2 bg-white px-2 sm:px-3 py-2 rounded-lg shadow-sm border whitespace-nowrap">
+              <FaApple className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium text-slate-700">Apple</span>
             </div>
-            <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg shadow-sm border">
-              <Mail className="w-5 h-5 text-slate-700" />
-              <span className="text-sm font-medium text-slate-700">Email</span>
+            <div className="flex items-center space-x-2 bg-white px-2 sm:px-3 py-2 rounded-lg shadow-sm border whitespace-nowrap">
+              <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium text-slate-700">Email</span>
             </div>
           </div>
         </div>
@@ -80,9 +81,10 @@ export default function SocialLoginBanner({
         <Button 
           onClick={handleLogin}
           size="lg"
-          className="bg-medical-blue hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+          className="bg-medical-blue hover:bg-blue-700 text-white px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 w-full sm:w-auto"
         >
-          Choose Your Login Method
+          <span className="hidden sm:inline">Choose Your Login Method</span>
+          <span className="sm:hidden">Sign In</span>
         </Button>
         
         <div className="mt-6 pt-6 border-t border-slate-200">
