@@ -37,10 +37,10 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
     resolver: zodResolver(personFormSchema),
     defaultValues: {
       name: "",
-      age: undefined,
+      age: "",
       sex: undefined,
-      height: undefined,
-      weight: undefined,
+      height: "",
+      weight: "",
     },
   });
 
@@ -110,10 +110,18 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
   });
 
   const onSubmit = (data: PersonFormData) => {
+    // Convert string values to numbers or undefined
+    const processedData = {
+      ...data,
+      age: data.age && data.age !== "" ? (typeof data.age === "string" ? parseInt(data.age) : data.age) : undefined,
+      height: data.height && data.height !== "" ? (typeof data.height === "string" ? parseFloat(data.height) : data.height) : undefined,
+      weight: data.weight && data.weight !== "" ? (typeof data.weight === "string" ? parseFloat(data.weight) : data.weight) : undefined,
+    };
+    
     if (editingPerson) {
-      updatePersonMutation.mutate({ id: editingPerson.id, data });
+      updatePersonMutation.mutate({ id: editingPerson.id, data: processedData });
     } else {
-      createPersonMutation.mutate(data);
+      createPersonMutation.mutate(processedData);
     }
   };
 
@@ -121,10 +129,10 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
     setEditingPerson(person);
     form.reset({
       name: person.name,
-      age: person.age || undefined,
+      age: person.age ? person.age.toString() : "",
       sex: person.sex as "Male" | "Female" | "Other" | undefined,
-      height: typeof person.height === 'number' ? person.height : undefined,
-      weight: typeof person.weight === 'number' ? person.weight : undefined,
+      height: person.height ? person.height.toString() : "",
+      weight: person.weight ? person.weight.toString() : "",
     });
     setDialogOpen(true);
   };
@@ -161,11 +169,14 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
               Add Person
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-md" aria-describedby="person-dialog-description">
             <DialogHeader>
               <DialogTitle>
                 {editingPerson ? "Edit Person" : "Add New Person"}
               </DialogTitle>
+              <p id="person-dialog-description" className="text-sm text-muted-foreground">
+                {editingPerson ? "Update the person's information below." : "Add a new family member to track their medical reports separately."}
+              </p>
             </DialogHeader>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -195,7 +206,7 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
                             type="number" 
                             placeholder="Age"
                             {...field}
-                            onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)}
+                            onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : "")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -239,7 +250,7 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
                             type="number" 
                             placeholder="Height"
                             {...field}
-                            onChange={(e) => field.onChange(e.target.value ? parseFloat(e.target.value) : undefined)}
+                            onChange={(e) => field.onChange(e.target.value ? parseFloat(e.target.value) : "")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -258,7 +269,7 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
                             type="number" 
                             placeholder="Weight"
                             {...field}
-                            onChange={(e) => field.onChange(e.target.value ? parseFloat(e.target.value) : undefined)}
+                            onChange={(e) => field.onChange(e.target.value ? parseFloat(e.target.value) : "")}
                           />
                         </FormControl>
                         <FormMessage />

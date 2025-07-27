@@ -135,8 +135,9 @@ export function FileUploadWithPerson({
   };
 
   const handlePersonChange = (value: string) => {
-    setPersonId(value);
-    onPersonSelect?.(value);
+    const actualPersonId = value === "none" ? "" : value;
+    setPersonId(actualPersonId);
+    onPersonSelect?.(actualPersonId);
   };
 
   return (
@@ -152,7 +153,7 @@ export function FileUploadWithPerson({
               <SelectValue placeholder="Choose a family member or leave blank for general upload" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">General Upload (No specific person)</SelectItem>
+              <SelectItem value="none">General Upload (No specific person)</SelectItem>
               {persons.map((person) => (
                 <SelectItem key={person.id} value={person.id}>
                   <div className="flex items-center">
