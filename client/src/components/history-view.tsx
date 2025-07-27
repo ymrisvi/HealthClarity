@@ -155,22 +155,22 @@ export default function HistoryView({ onClose }: HistoryViewProps) {
                   <span className="text-sm font-medium text-slate-700">Filter by Family Member:</span>
                 </div>
                 <Tabs value={selectedPersonFilter} onValueChange={setSelectedPersonFilter} className="w-full">
-                  <TabsList className="grid w-full grid-cols-auto bg-slate-100 p-1 h-auto flex-wrap justify-start">
+                  <TabsList className="flex flex-wrap justify-start bg-slate-100 p-1 h-auto w-full gap-1">
                     <TabsTrigger 
                       value="all" 
-                      className="text-xs sm:text-sm px-3 py-2 data-[state=active]:bg-white"
+                      className="text-xs sm:text-sm px-3 py-2 data-[state=active]:bg-white flex-shrink-0 whitespace-nowrap"
                     >
                       <Users className="w-3 h-3 mr-1" />
                       All ({(history?.medicalReports?.length || 0) + (history?.medicineSearches?.length || 0)})
                     </TabsTrigger>
                     <TabsTrigger 
                       value="general" 
-                      className="text-xs sm:text-sm px-3 py-2 data-[state=active]:bg-white"
+                      className="text-xs sm:text-sm px-3 py-2 data-[state=active]:bg-white flex-shrink-0 whitespace-nowrap"
                     >
                       <FileText className="w-3 h-3 mr-1" />
                       General ({((history?.medicalReports?.filter(r => !r.personId)?.length || 0) + (history?.medicineSearches?.filter(s => !s.personId)?.length || 0))})
                     </TabsTrigger>
-                    {history.persons.map((person) => {
+                    {history?.persons?.map((person) => {
                       const personReports = history.medicalReports?.filter(r => r.personId === person.id)?.length || 0;
                       const personSearches = history.medicineSearches?.filter(s => s.personId === person.id)?.length || 0;
                       const totalCount = personReports + personSearches;
@@ -179,7 +179,7 @@ export default function HistoryView({ onClose }: HistoryViewProps) {
                         <TabsTrigger 
                           key={person.id}
                           value={person.id} 
-                          className="text-xs sm:text-sm px-3 py-2 data-[state=active]:bg-white"
+                          className="text-xs sm:text-sm px-3 py-2 data-[state=active]:bg-white flex-shrink-0 whitespace-nowrap"
                         >
                           <User className="w-3 h-3 mr-1" />
                           {person.name} ({totalCount})
@@ -235,7 +235,7 @@ export default function HistoryView({ onClose }: HistoryViewProps) {
                           </div>
                           <div className="flex items-center space-x-2 flex-shrink-0">
                             <Badge variant="secondary" className="text-xs">
-                              {report.analysis?.reportType || 'Medical Report'}
+                              {(report.analysis as any)?.reportType || 'Medical Report'}
                             </Badge>
                             <ChevronRight className="w-4 h-4 text-slate-400" />
                           </div>
@@ -287,7 +287,7 @@ export default function HistoryView({ onClose }: HistoryViewProps) {
                           </div>
                           <div className="flex items-center space-x-2 flex-shrink-0">
                             <Badge variant="secondary" className="text-xs">
-                              {search.searchResult?.medicineType || 'Medicine'}
+                              {(search.searchResult as any)?.medicineType || 'Medicine'}
                             </Badge>
                             <ChevronRight className="w-4 h-4 text-slate-400" />
                           </div>
