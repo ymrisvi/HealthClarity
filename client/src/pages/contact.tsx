@@ -19,7 +19,7 @@ export default function Contact() {
   };
 
   const openEmailClient = () => {
-    window.location.href = `mailto:${emailAddress}?subject=MedReport Assistant Inquiry`;
+    window.location.href = `mailto:${emailAddress}?subject=Health Clarity Inquiry`;
   };
 
   return (
@@ -58,7 +58,7 @@ export default function Contact() {
             </div>
             <h2 className="text-4xl font-bold gradient-text mb-6">Get in Touch</h2>
             <p className="text-slate-600 text-xl leading-relaxed mb-8">
-              For any questions, support, feedback, or inquiries about MedReport Assistant, 
+              For any questions, support, feedback, or inquiries about Health Clarity, 
               please feel free to reach out directly via email.
             </p>
           </div>

@@ -1,4 +1,4 @@
-# Medical Report Assistant
+# Health Clarity
 
 ## Overview
 

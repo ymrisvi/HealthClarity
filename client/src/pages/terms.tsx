@@ -43,7 +43,7 @@ export default function Terms() {
             Last updated: January 27, 2025
           </p>
           <p className="text-lg text-slate-600 leading-relaxed mt-4">
-            Please read these Terms of Service carefully before using MedReport Assistant.
+            Please read these Terms of Service carefully before using Health Clarity.
           </p>
         </div>
 
@@ -57,7 +57,7 @@ export default function Terms() {
           </div>
           
           <p className="text-slate-600 leading-relaxed">
-            By accessing and using MedReport Assistant, you accept and agree to be bound by the terms and 
+            By accessing and using Health Clarity, you accept and agree to be bound by the terms and 
             provision of this agreement. If you do not agree to abide by the above, please do not use this service.
           </p>
         </Card>
@@ -73,7 +73,7 @@ export default function Terms() {
           
           <div className="space-y-4">
             <p className="text-slate-600 leading-relaxed font-semibold">
-              MedReport Assistant is for educational and informational purposes only and is not intended to 
+              Health Clarity is for educational and informational purposes only and is not intended to 
               replace professional medical advice, diagnosis, or treatment.
             </p>
             
@@ -84,7 +84,7 @@ export default function Terms() {
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
-                <p className="text-slate-600">Never disregard professional medical advice or delay in seeking it because of something you have read on MedReport Assistant</p>
+                <p className="text-slate-600">Never disregard professional medical advice or delay in seeking it because of something you have read on Health Clarity</p>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
@@ -313,7 +313,7 @@ export default function Terms() {
             If you have any questions about these Terms of Service, please contact us:
           </p>
           <div className="space-y-2">
-            <p className="text-slate-600"><strong>Email:</strong> legal@medreport-assistant.com</p>
+            <p className="text-slate-600"><strong>Email:</strong> mohideenrisviy@gmail.com</p>
             <p className="text-slate-600"><strong>Response Time:</strong> We respond to legal inquiries within 72 hours</p>
           </div>
         </Card>
@@ -322,7 +322,7 @@ export default function Terms() {
         <div className="text-center mt-12">
           <h3 className="text-xl font-bold text-slate-900 mb-4">Acknowledgment</h3>
           <p className="text-slate-600 leading-relaxed">
-            By using MedReport Assistant, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
+            By using Health Clarity, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
           </p>
         </div>
       </div>

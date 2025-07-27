@@ -24,7 +24,7 @@ export default function Landing() {
                 <Activity className="w-8 h-8 text-white drop-shadow-sm" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold gradient-text">MedReport Assistant</h1>
+                <h1 className="text-2xl font-bold gradient-text">Health Clarity</h1>
                 <p className="text-sm text-slate-600">AI-powered medical report analysis</p>
               </div>
             </div>
@@ -139,7 +139,7 @@ export default function Landing() {
                 <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-2 rounded-lg mr-3">
                   <Activity className="w-6 h-6 text-white drop-shadow-sm" />
                 </div>
-                <h3 className="text-xl font-bold">MedReport Assistant</h3>
+                <h3 className="text-xl font-bold">Health Clarity</h3>
               </div>
               <p className="text-slate-400 mb-6 max-w-md">
                 AI-powered medical report analysis and medicine information, 

@@ -55,8 +55,8 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-slate-100">
         <SocialLoginBanner 
-          title="Try Our Medical Report Assistant"
-          description="Get one free analysis or sign in for unlimited access to medical report analysis and medicine information"
+          title="Try Health Clarity"
+          description="Get one free analysis or sign in for unlimited access to Health Clarity's medical report analysis and medicine information"
         />
         
         <div className="max-w-4xl mx-auto px-4 py-8">
@@ -118,7 +118,7 @@ export default function Home() {
                 <Activity className="w-8 h-8 text-white drop-shadow-sm" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold gradient-text">MedReport Assistant</h1>
+                <h1 className="text-2xl font-bold gradient-text">Health Clarity</h1>
                 <p className="text-sm text-slate-600">AI-powered medical analysis</p>
               </div>
             </div>
@@ -351,7 +351,7 @@ export default function Home() {
                 <div className="bg-blue-600 p-2 rounded-lg">
                   <FileText className="w-6 h-6 text-white drop-shadow-sm" />
                 </div>
-                <span className="text-xl font-bold">MedReport Assistant</span>
+                <span className="text-xl font-bold">Health Clarity</span>
               </div>
               <p className="text-slate-300 mb-4">
                 Making medical information accessible and understandable for everyone. Empowering patients with knowledge while emphasizing the importance of professional medical care.
