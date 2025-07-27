@@ -180,15 +180,7 @@ export default function Landing() {
                     <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </li>
-                <li>
-                  <button 
-                    onClick={() => navigate('/about')}
-                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
-                  >
-                    About Us
-                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </li>
+
               </ul>
             </div>
 

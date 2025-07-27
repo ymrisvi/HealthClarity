@@ -127,10 +127,7 @@ export default function Home() {
                   Medicine Lookup
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-healthcare-teal transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="#about" className="text-slate-700 hover:text-medical-blue font-medium transition-colors relative group">
-                  About
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-mint-green transition-all duration-300 group-hover:w-full"></span>
-                </a>
+
               </nav>
               <div className="flex items-center space-x-4">
                 {user?.isAdmin && (
@@ -333,7 +330,7 @@ export default function Home() {
             <div>
               <h4 className="text-lg font-semibold mb-4">Legal & Support</h4>
               <ul className="space-y-2 text-slate-300">
-                <li><button onClick={() => navigate('/about')} className="hover:text-white transition-colors">About Us</button></li>
+
                 <li><button onClick={() => navigate('/privacy')} className="hover:text-white transition-colors">Privacy Policy</button></li>
                 <li><button onClick={() => navigate('/terms')} className="hover:text-white transition-colors">Terms of Service</button></li>
                 <li><a href="mailto:legal@medreport-assistant.com" className="hover:text-white transition-colors">Contact Us</a></li>
