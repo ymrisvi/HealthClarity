@@ -12,7 +12,7 @@ import SocialLoginBanner from "@/components/social-login-banner";
 import SEOHead from "@/components/seo-head";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, Search, Shield, Info, Users, Lock, Activity, Heart } from "lucide-react";
+import { FileText, Search, Shield, Info, Users, Lock, Activity, Heart, BookOpen } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { isUsageLimitError } from "@/lib/authUtils";
 import { useLocation } from "wouter";
@@ -148,7 +148,7 @@ export default function Home() {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-healthcare-teal transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <button 
-                  onClick={() => navigate('/knowledge')}
+                  onClick={() => window.location.href = '/knowledge'}
                   className="text-slate-700 hover:text-emerald-600 font-medium transition-colors relative group text-sm"
                 >
                   Knowledge Base
@@ -198,6 +198,28 @@ export default function Home() {
           </p>
           <div className="heartbeat-line w-32 sm:w-40 lg:w-48 h-1 mx-auto mt-4 sm:mt-6"></div>
         </div>
+
+        {/* Knowledge Base Highlight Section */}
+        <Card className="mb-8 p-6 bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200 shadow-lg">
+          <div className="flex flex-col sm:flex-row items-center justify-between">
+            <div className="flex items-center mb-4 sm:mb-0">
+              <div className="bg-gradient-to-br from-emerald-600 to-teal-600 p-3 rounded-xl mr-4 shadow-lg">
+                <BookOpen className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 mb-1">Medical Knowledge Base</h3>
+                <p className="text-slate-600">Learn about blood tests, ECG readings, X-rays, and more medical topics</p>
+              </div>
+            </div>
+            <Button 
+              onClick={() => window.location.href = '/knowledge'}
+              className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-6 py-2"
+            >
+              <BookOpen className="w-4 h-4 mr-2" />
+              Browse Articles
+            </Button>
+          </div>
+        </Card>
 
         {/* Main Content Tabs - Mobile Responsive */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-8 sm:mb-10 lg:mb-12">
