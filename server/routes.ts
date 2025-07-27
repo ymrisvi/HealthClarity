@@ -6,6 +6,13 @@ import { insertMedicalReportSchema, insertMedicineSearchSchema } from "@shared/s
 import { analyzeMedicalReport, analyzeMedicalImage, getMedicineInformation } from "./services/openai";
 import { extractTextFromImage } from "./services/ocr";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { MailService } from '@sendgrid/mail';
+
+// Initialize SendGrid
+const mailService = new MailService();
+if (process.env.SENDGRID_API_KEY) {
+  mailService.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -345,6 +352,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching user activities:", error);
       res.status(500).json({ message: "Failed to fetch user activities" });
+    }
+  });
+
+  // Contact form route
+  app.post('/api/contact', async (req, res) => {
+    try {
+      const { name, email, subject, category, message } = req.body;
+
+      if (!name || !email || !subject || !message) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      if (!process.env.SENDGRID_API_KEY) {
+        return res.status(500).json({ message: "Email service not configured" });
+      }
+
+      const emailContent = `
+New Contact Form Submission
+
+Name: ${name}
+Email: ${email}
+Category: ${category || 'Not specified'}
+Subject: ${subject}
+
+Message:
+${message}
+
+---
+This message was sent from the MedReport Assistant contact form.
+Reply directly to this email to respond to the user.
+      `.trim();
+
+      await mailService.send({
+        to: 'mohideenrisviy@gmail.com',
+        from: 'noreply@medreport-assistant.com', // This should be a verified sender in SendGrid
+        replyTo: email, // User can reply directly to the sender
+        subject: `Contact Form: ${subject}`,
+        text: emailContent,
+        html: emailContent.replace(/\n/g, '<br>')
+      });
+
+      res.json({ message: "Message sent successfully" });
+    } catch (error) {
+      console.error("Error sending contact email:", error);
+      res.status(500).json({ message: "Failed to send message" });
     }
   });
 

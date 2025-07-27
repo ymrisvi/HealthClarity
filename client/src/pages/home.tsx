@@ -331,9 +331,9 @@ export default function Home() {
               <h4 className="text-lg font-semibold mb-4">Legal & Support</h4>
               <ul className="space-y-2 text-slate-300">
 
+                <li><button onClick={() => navigate('/contact')} className="hover:text-white transition-colors">Contact Us</button></li>
                 <li><button onClick={() => navigate('/privacy')} className="hover:text-white transition-colors">Privacy Policy</button></li>
                 <li><button onClick={() => navigate('/terms')} className="hover:text-white transition-colors">Terms of Service</button></li>
-                <li><a href="mailto:legal@medreport-assistant.com" className="hover:text-white transition-colors">Contact Us</a></li>
               </ul>
             </div>
           </div>

@@ -184,10 +184,19 @@ export default function Landing() {
               </ul>
             </div>
 
-            {/* Legal Links */}
+            {/* Support & Legal Links */}
             <div>
-              <h4 className="text-lg font-semibold mb-4">Legal</h4>
+              <h4 className="text-lg font-semibold mb-4">Support & Legal</h4>
               <ul className="space-y-3">
+                <li>
+                  <button 
+                    onClick={() => navigate('/contact')}
+                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    Contact Us
+                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </li>
                 <li>
                   <button 
                     onClick={() => navigate('/privacy')}
@@ -205,15 +214,6 @@ export default function Landing() {
                     Terms of Service
                     <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </button>
-                </li>
-                <li>
-                  <a 
-                    href="mailto:legal@medreport-assistant.com"
-                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
-                  >
-                    Contact
-                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </a>
                 </li>
               </ul>
             </div>

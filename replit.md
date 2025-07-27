@@ -78,10 +78,11 @@ The application follows a modern full-stack architecture with clear separation b
   - `MedicineSearch`: Medicine lookup with search suggestions
   - `ResultsDisplay`: Structured display of AI analysis results
   - `MedicalDisclaimer`: Important safety information
-- **Legal & Compliance Pages**:
+- **Contact & Legal Pages**:
+  - `Contact`: Complete contact form with email functionality via SendGrid to mohideenrisviy@gmail.com
   - `Privacy`: Detailed privacy policy covering data handling and user rights
   - `Terms`: Complete terms of service with medical disclaimers and usage guidelines
-  - Footer navigation links to legal pages from landing and home pages
+  - Footer navigation links to contact and legal pages from landing and home pages
 
 ## Data Flow
 
