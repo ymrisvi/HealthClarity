@@ -51,7 +51,7 @@ export default function Terms() {
         <Card className="medical-card glass-effect p-8 mb-8">
           <div className="flex items-center mb-6">
             <div className="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl mr-4">
-              <FileText className="w-8 h-8 text-mint-green" />
+              <FileText className="w-8 h-8 text-green-700" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900">Acceptance of Terms</h3>
           </div>
@@ -102,7 +102,7 @@ export default function Terms() {
         <Card className="medical-card glass-effect p-8 mb-8">
           <div className="flex items-center mb-6">
             <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl mr-4">
-              <Shield className="w-8 h-8 text-medical-blue" />
+              <Shield className="w-8 h-8 text-blue-700" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900">Service Description</h3>
           </div>
@@ -215,7 +215,7 @@ export default function Terms() {
         <Card className="medical-card glass-effect p-8 mb-8">
           <div className="flex items-center mb-6">
             <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-3 rounded-xl mr-4">
-              <Shield className="w-8 h-8 text-healthcare-teal" />
+              <Shield className="w-8 h-8 text-teal-700" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900">Privacy and Data Handling</h3>
           </div>

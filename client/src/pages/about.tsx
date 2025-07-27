@@ -50,7 +50,7 @@ export default function About() {
           <Card className="medical-card glass-effect p-8">
             <div className="flex items-center mb-4">
               <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl mr-4">
-                <Heart className="w-8 h-8 text-medical-blue" />
+                <Heart className="w-8 h-8 text-blue-700" />
               </div>
               <h3 className="text-2xl font-bold text-slate-900">Medical Report Analysis</h3>
             </div>
@@ -63,7 +63,7 @@ export default function About() {
           <Card className="medical-card glass-effect p-8">
             <div className="flex items-center mb-4">
               <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-3 rounded-xl mr-4">
-                <Shield className="w-8 h-8 text-healthcare-teal" />
+                <Shield className="w-8 h-8 text-teal-700" />
               </div>
               <h3 className="text-2xl font-bold text-slate-900">Medicine Information</h3>
             </div>
@@ -78,7 +78,7 @@ export default function About() {
         <Card className="medical-card glass-effect p-8 mb-16">
           <div className="text-center mb-8">
             <div className="bg-gradient-to-br from-green-100 to-green-200 p-4 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <Award className="w-8 h-8 text-mint-green" />
+              <Award className="w-8 h-8 text-green-700" />
             </div>
             <h3 className="text-3xl font-bold text-slate-900 mb-4">Our Commitment to You</h3>
           </div>
@@ -96,7 +96,7 @@ export default function About() {
             
             <div className="text-center">
               <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                <Brain className="w-6 h-6 text-medical-blue" />
+                <Brain className="w-6 h-6 text-blue-700" />
               </div>
               <h4 className="font-bold text-slate-900 mb-2">AI-Powered Accuracy</h4>
               <p className="text-sm text-slate-600">
@@ -106,7 +106,7 @@ export default function About() {
             
             <div className="text-center">
               <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-3 rounded-xl w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                <Clock className="w-6 h-6 text-healthcare-teal" />
+                <Clock className="w-6 h-6 text-teal-700" />
               </div>
               <h4 className="font-bold text-slate-900 mb-2">Available 24/7</h4>
               <p className="text-sm text-slate-600">

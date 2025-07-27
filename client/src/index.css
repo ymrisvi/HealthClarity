@@ -24,10 +24,15 @@
   --ring: hsl(220, 14.3%, 4.1%);
   --radius: 0.5rem;
   
-  /* Custom medical theme colors */
-  --medical-blue: hsl(207, 90%, 54%);
-  --healthcare-teal: hsl(186, 92%, 44%);
-  --mint-green: hsl(158, 81%, 42%);
+  /* Custom medical theme colors - Accessibility enhanced */
+  --medical-blue: hsl(207, 90%, 45%);
+  --healthcare-teal: hsl(186, 85%, 35%);
+  --mint-green: hsl(158, 81%, 35%);
+  
+  /* Darker variants for better contrast */
+  --medical-blue-dark: hsl(207, 90%, 35%);
+  --healthcare-teal-dark: hsl(186, 85%, 25%);
+  --mint-green-dark: hsl(158, 81%, 25%);
 }
 
 .dark {
@@ -99,6 +104,19 @@
 
 .border-mint-green {
   border-color: var(--mint-green);
+}
+
+/* Accessible text color variants */
+.text-medical-blue-dark {
+  color: var(--medical-blue-dark);
+}
+
+.text-healthcare-teal-dark {
+  color: var(--healthcare-teal-dark);
+}
+
+.text-mint-green-dark {
+  color: var(--mint-green-dark);
 }
 
 /* Hover effects for medical theme colors */

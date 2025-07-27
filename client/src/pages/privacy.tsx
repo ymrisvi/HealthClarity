@@ -51,7 +51,7 @@ export default function Privacy() {
         <Card className="medical-card glass-effect p-8 mb-8">
           <div className="flex items-center mb-6">
             <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl mr-4">
-              <Database className="w-8 h-8 text-medical-blue" />
+              <Database className="w-8 h-8 text-blue-700" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900">Information We Collect</h3>
           </div>
@@ -87,7 +87,7 @@ export default function Privacy() {
         <Card className="medical-card glass-effect p-8 mb-8">
           <div className="flex items-center mb-6">
             <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-3 rounded-xl mr-4">
-              <FileText className="w-8 h-8 text-healthcare-teal" />
+              <FileText className="w-8 h-8 text-teal-700" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900">How We Use Your Information</h3>
           </div>
@@ -133,7 +133,7 @@ export default function Privacy() {
             <div className="grid md:grid-cols-2 gap-6 mt-6">
               <div className="flex items-start space-x-3">
                 <div className="bg-gradient-to-br from-green-100 to-green-200 p-2 rounded-lg">
-                  <Shield className="w-5 h-5 text-mint-green" />
+                  <Shield className="w-5 h-5 text-green-700" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-slate-900">Encryption</h4>
@@ -143,7 +143,7 @@ export default function Privacy() {
               
               <div className="flex items-start space-x-3">
                 <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-2 rounded-lg">
-                  <Database className="w-5 h-5 text-medical-blue" />
+                  <Database className="w-5 h-5 text-blue-700" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-slate-900">Secure Storage</h4>
@@ -217,7 +217,7 @@ export default function Privacy() {
         <Card className="medical-card glass-effect p-8 mb-8">
           <div className="flex items-center mb-6">
             <div className="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl mr-4">
-              <Shield className="w-8 h-8 text-mint-green" />
+              <Shield className="w-8 h-8 text-green-700" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900">Your Rights</h3>
           </div>

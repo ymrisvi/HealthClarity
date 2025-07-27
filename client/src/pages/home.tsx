@@ -181,7 +181,7 @@ export default function Home() {
           <Card id="upload" className="medical-card p-10 glass-effect">
             <div className="flex items-center mb-8">
               <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-2xl mr-6 shadow-lg">
-                <FileText className="w-10 h-10 text-medical-blue medical-icon" />
+                <FileText className="w-10 h-10 text-blue-700 medical-icon" />
               </div>
               <div>
                 <h3 className="text-3xl font-bold text-slate-900">Upload Medical Report</h3>
@@ -205,7 +205,7 @@ export default function Home() {
           <Card id="medicine" className="medical-card p-10 glass-effect">
             <div className="flex items-center mb-8">
               <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-4 rounded-2xl mr-6 shadow-lg">
-                <Search className="w-10 h-10 text-healthcare-teal medical-icon" />
+                <Search className="w-10 h-10 text-teal-700 medical-icon" />
               </div>
               <div>
                 <h3 className="text-3xl font-bold text-slate-900">Medicine Information</h3>
@@ -240,22 +240,22 @@ export default function Home() {
           <h3 className="text-2xl font-bold text-slate-900 text-center mb-8">How It Works</h3>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-medical-blue/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-medical-blue">1</span>
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-blue-700">1</span>
               </div>
               <h4 className="text-lg font-semibold text-slate-900 mb-2">Upload or Search</h4>
               <p className="text-slate-600">Upload your medical report or enter a medicine name you want to understand better.</p>
             </div>
             <div className="text-center">
-              <div className="bg-healthcare-teal/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-healthcare-teal">2</span>
+              <div className="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-teal-700">2</span>
               </div>
               <h4 className="text-lg font-semibold text-slate-900 mb-2">AI Analysis</h4>
               <p className="text-slate-600">Our AI analyzes the medical information and converts complex terms into simple language.</p>
             </div>
             <div className="text-center">
-              <div className="bg-mint-green/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-mint-green">3</span>
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-green-700">3</span>
               </div>
               <h4 className="text-lg font-semibold text-slate-900 mb-2">Clear Explanation</h4>
               <p className="text-slate-600">Get easy-to-understand explanations that help you make informed health decisions.</p>
@@ -269,21 +269,21 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="bg-white rounded-xl p-4 shadow-sm mb-3">
-                <Shield className="w-12 h-12 text-mint-green mx-auto" />
+                <Shield className="w-12 h-12 text-green-600 mx-auto" />
               </div>
               <h4 className="font-semibold text-slate-900 mb-1">No Medical Advice</h4>
               <p className="text-sm text-slate-600">We provide information, not medical recommendations</p>
             </div>
             <div className="text-center">
               <div className="bg-white rounded-xl p-4 shadow-sm mb-3">
-                <Lock className="w-12 h-12 text-medical-blue mx-auto" />
+                <Lock className="w-12 h-12 text-blue-600 mx-auto" />
               </div>
               <h4 className="font-semibold text-slate-900 mb-1">Privacy Protected</h4>
               <p className="text-sm text-slate-600">Your medical data is processed securely and not stored</p>
             </div>
             <div className="text-center">
               <div className="bg-white rounded-xl p-4 shadow-sm mb-3">
-                <Info className="w-12 h-12 text-healthcare-teal mx-auto" />
+                <Info className="w-12 h-12 text-teal-600 mx-auto" />
               </div>
               <h4 className="font-semibold text-slate-900 mb-1">Educational Only</h4>
               <p className="text-sm text-slate-600">Designed to help you understand, not diagnose</p>
