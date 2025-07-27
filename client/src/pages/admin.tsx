@@ -77,19 +77,19 @@ export default function AdminDashboard() {
     }
   }, [user, isAuthenticated, navigate, toast]);
 
-  const { data: adminStats, isLoading: statsLoading } = useQuery({
+  const { data: adminStats, isLoading: statsLoading } = useQuery<AdminStats>({
     queryKey: ['/api/admin/stats'],
-    enabled: user?.isAdmin,
+    enabled: !!user?.isAdmin,
   });
 
-  const { data: users, isLoading: usersLoading } = useQuery({
+  const { data: users, isLoading: usersLoading } = useQuery<UserData[]>({
     queryKey: ['/api/admin/users'],
-    enabled: user?.isAdmin,
+    enabled: !!user?.isAdmin,
   });
 
-  const { data: activities, isLoading: activitiesLoading } = useQuery({
+  const { data: activities, isLoading: activitiesLoading } = useQuery<ActivityData[]>({
     queryKey: ['/api/admin/activities'],
-    enabled: user?.isAdmin,
+    enabled: !!user?.isAdmin,
   });
 
   if (!user?.isAdmin) {

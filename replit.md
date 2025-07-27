@@ -17,6 +17,13 @@ The application follows a modern full-stack architecture with clear separation b
 - **Usage Limits**: Anonymous users get 1 free analysis, authenticated users have unlimited access
 - **Session Management**: PostgreSQL-backed session storage with automatic refresh tokens
 - **Social Login UI**: Enhanced login interface showcasing available social authentication providers
+- **Admin Portal**: Role-based access control with comprehensive user analytics and activity tracking
+
+### Admin Dashboard Features
+- **User Management**: Complete user list with usage statistics, visit counts, and admin status
+- **Real-time Analytics**: Daily and total metrics for reports, medicine searches, and user activity
+- **Activity Monitoring**: Live feed of user actions including logins, uploads, and searches
+- **Role-based Security**: Admin-only access with proper authentication verification
 
 ### Frontend Architecture
 - **Framework**: React with TypeScript using Vite as the build tool
@@ -39,10 +46,12 @@ The application follows a modern full-stack architecture with clear separation b
 - **ORM**: Drizzle ORM configured for PostgreSQL
 - **Database**: PostgreSQL with Neon serverless provider (ACTIVE)
 - **Schema**: Defined in `shared/schema.ts` with user-linked data:
-  - `users`: Stores user profile information from Replit Auth
+  - `users`: Stores user profile information from Replit Auth (enhanced with admin fields)
   - `sessions`: Session storage for authentication persistence
   - `medical_reports`: User-linked medical reports with analysis results
   - `medicine_searches`: User-linked medicine lookup cache
+  - `user_activity`: Tracks all user actions for admin analytics (logins, uploads, searches)
+  - `usage_stats`: Daily aggregated usage statistics for admin dashboard
 - **Storage Implementation**: DatabaseStorage class with user relationship tracking
 - **Fallback**: MemStorage class available for development/testing (not currently used)
 

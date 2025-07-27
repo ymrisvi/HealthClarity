@@ -27,18 +27,9 @@ function Router() {
 
   return (
     <Switch>
-      {isAuthenticated ? (
-        <>
-          <Route path="/" component={Home} />
-          <Route path="/admin" component={AdminDashboard} />
-          <Route component={NotFound} />
-        </>
-      ) : (
-        <>
-          <Route path="/" component={Landing} />
-          <Route component={NotFound} />
-        </>
-      )}
+      <Route path="/" component={isAuthenticated ? Home : Landing} />
+      <Route path="/admin" component={AdminDashboard} />
+      <Route component={NotFound} />
     </Switch>
   );
 }
