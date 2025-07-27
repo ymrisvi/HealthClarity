@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import multer from "multer";
 import { storage } from "./storage";
-import { insertMedicalReportSchema, insertMedicineSearchSchema } from "@shared/schema";
+import { insertMedicalReportSchema, insertMedicineSearchSchema, insertPersonSchema } from "@shared/schema";
 import { analyzeMedicalReport, analyzeMedicalImage, getMedicineInformation } from "./services/openai";
 import { extractTextFromImage } from "./services/ocr";
 import { setupAuth, isAuthenticated } from "./replitAuth";
@@ -103,6 +103,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Person management routes
+  app.get('/api/persons', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const persons = await storage.getUserPersons(userId);
+      res.json(persons);
+    } catch (error) {
+      console.error("Error fetching persons:", error);
+      res.status(500).json({ message: "Failed to fetch persons" });
+    }
+  });
+
+  app.post('/api/persons', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      
+      // Validate request body
+      const personData = insertPersonSchema.parse({
+        ...req.body,
+        userId,
+      });
+
+      const person = await storage.createPerson(personData);
+      
+      // Track activity
+      await storage.trackUserActivity(userId, 'person_created', {
+        personId: person.id,
+        name: person.name,
+      });
+
+      res.json(person);
+    } catch (error) {
+      console.error("Error creating person:", error);
+      res.status(500).json({ message: "Failed to create person" });
+    }
+  });
+
+  app.put('/api/persons/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const personId = req.params.id;
+      
+      // Verify the person belongs to the user
+      const existingPerson = await storage.getPerson(personId);
+      if (!existingPerson || existingPerson.userId !== userId) {
+        return res.status(404).json({ message: "Person not found" });
+      }
+      
+      // Validate request body (exclude userId from updates)
+      const updateData = insertPersonSchema.omit({ userId: true }).partial().parse(req.body);
+
+      const person = await storage.updatePerson(personId, updateData);
+      
+      // Track activity
+      await storage.trackUserActivity(userId, 'person_updated', {
+        personId: person.id,
+        name: person.name,
+      });
+
+      res.json(person);
+    } catch (error) {
+      console.error("Error updating person:", error);
+      res.status(500).json({ message: "Failed to update person" });
+    }
+  });
+
+  app.delete('/api/persons/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const personId = req.params.id;
+      
+      // Verify the person belongs to the user
+      const existingPerson = await storage.getPerson(personId);
+      if (!existingPerson || existingPerson.userId !== userId) {
+        return res.status(404).json({ message: "Person not found" });
+      }
+      
+      await storage.deletePerson(personId);
+      
+      // Track activity
+      await storage.trackUserActivity(userId, 'person_deleted', {
+        personId,
+        name: existingPerson.name,
+      });
+
+      res.json({ message: "Person deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting person:", error);
+      res.status(500).json({ message: "Failed to delete person" });
+    }
+  });
+
   // Upload and analyze medical report
   app.post("/api/reports/upload", checkUsageLimit, upload.single('file'), async (req: any, res) => {
     try {
@@ -111,6 +203,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const { originalname, mimetype, buffer } = req.file;
+      const { personId } = req.body;
+      
+      // For authenticated users, verify personId if provided
+      if (req.isAuthenticated() && personId) {
+        const userId = req.user.claims.sub;
+        const person = await storage.getPerson(personId);
+        if (!person || person.userId !== userId) {
+          return res.status(400).json({ message: "Invalid person ID" });
+        }
+      }
       
       let extractedText = "";
       
@@ -165,6 +267,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Store the report
       const reportData = insertMedicalReportSchema.parse({
         userId,
+        personId: personId || null,
         fileName: originalname,
         fileType: mimetype,
         extractedText,

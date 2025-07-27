@@ -2,6 +2,7 @@ import {
   medicalReports, 
   medicineSearches, 
   users,
+  persons,
   userActivity,
   type MedicalReport, 
   type InsertMedicalReport, 
@@ -9,6 +10,8 @@ import {
   type InsertMedicineSearch,
   type User,
   type UpsertUser,
+  type Person,
+  type InsertPerson,
   type UserActivity,
   type InsertUserActivity
 } from "@shared/schema";
@@ -21,15 +24,24 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
   
+  // Person operations
+  createPerson(person: InsertPerson): Promise<Person>;
+  updatePerson(id: string, person: Partial<InsertPerson>): Promise<Person>;
+  deletePerson(id: string): Promise<void>;
+  getUserPersons(userId: string): Promise<Person[]>;
+  getPerson(id: string): Promise<Person | undefined>;
+  
   // Medical Reports
   createMedicalReport(report: InsertMedicalReport): Promise<MedicalReport>;
   getMedicalReport(id: string): Promise<MedicalReport | undefined>;
   getUserMedicalReports(userId: string): Promise<MedicalReport[]>;
+  getPersonMedicalReports(personId: string): Promise<MedicalReport[]>;
   
   // Medicine Searches
   createMedicineSearch(search: InsertMedicineSearch): Promise<MedicineSearch>;
   getMedicineSearch(medicineName: string): Promise<MedicineSearch | undefined>;
   getUserMedicineSearches(userId: string): Promise<MedicineSearch[]>;
+  getPersonMedicineSearches(personId: string): Promise<MedicineSearch[]>;
   
   // Usage tracking for anonymous users
   getAnonymousUsageCount(sessionId: string): Promise<number>;
@@ -158,6 +170,44 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, userId));
   }
 
+  // Person operations
+  async createPerson(personData: InsertPerson): Promise<Person> {
+    const [person] = await db
+      .insert(persons)
+      .values(personData)
+      .returning();
+    return person;
+  }
+
+  async updatePerson(id: string, personData: Partial<InsertPerson>): Promise<Person> {
+    const [person] = await db
+      .update(persons)
+      .set({ ...personData, updatedAt: new Date() })
+      .where(eq(persons.id, id))
+      .returning();
+    return person;
+  }
+
+  async deletePerson(id: string): Promise<void> {
+    await db.delete(persons).where(eq(persons.id, id));
+  }
+
+  async getUserPersons(userId: string): Promise<Person[]> {
+    return db
+      .select()
+      .from(persons)
+      .where(eq(persons.userId, userId))
+      .orderBy(desc(persons.createdAt));
+  }
+
+  async getPerson(id: string): Promise<Person | undefined> {
+    const [person] = await db
+      .select()
+      .from(persons)
+      .where(eq(persons.id, id));
+    return person;
+  }
+
   // Medical Reports
   async createMedicalReport(insertReport: InsertMedicalReport): Promise<MedicalReport> {
     const [report] = await db
@@ -183,6 +233,14 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(medicalReports.createdAt));
   }
 
+  async getPersonMedicalReports(personId: string): Promise<MedicalReport[]> {
+    return await db
+      .select()
+      .from(medicalReports)
+      .where(eq(medicalReports.personId, personId))
+      .orderBy(desc(medicalReports.createdAt));
+  }
+
   // Medicine Searches
   async createMedicineSearch(insertSearch: InsertMedicineSearch): Promise<MedicineSearch> {
     const [search] = await db
@@ -205,6 +263,14 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(medicineSearches)
       .where(eq(medicineSearches.userId, userId))
+      .orderBy(desc(medicineSearches.createdAt));
+  }
+
+  async getPersonMedicineSearches(personId: string): Promise<MedicineSearch[]> {
+    return await db
+      .select()
+      .from(medicineSearches)
+      .where(eq(medicineSearches.personId, personId))
       .orderBy(desc(medicineSearches.createdAt));
   }
 

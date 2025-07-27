@@ -1,5 +1,7 @@
 import { useState } from "react";
 import FileUpload from "@/components/file-upload";
+import { FileUploadWithPerson } from "@/components/file-upload-with-person";
+import { PersonManagement } from "@/components/person-management";
 import MedicineSearch from "@/components/medicine-search";
 import ResultsDisplay from "@/components/results-display";
 import MedicalDisclaimer from "@/components/medical-disclaimer";
@@ -7,7 +9,8 @@ import AuthBanner from "@/components/auth-banner";
 import UserHeader from "@/components/user-header";
 import HistoryView from "@/components/history-view";
 import SocialLoginBanner from "@/components/social-login-banner";
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, Search, Shield, Info, Users, Lock, Activity, Heart } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { isUsageLimitError } from "@/lib/authUtils";
@@ -21,6 +24,7 @@ export default function Home() {
   } | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [usageLimitReached, setUsageLimitReached] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState<string>("");
   const [location, navigate] = useLocation();
   
   const { user, isAuthenticated } = useAuth();
@@ -171,57 +175,90 @@ export default function Home() {
           <div className="heartbeat-line w-48 h-1 mx-auto mt-6"></div>
         </div>
 
-        {/* Feature Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        {/* Main Content Tabs */}
+        <Tabs defaultValue="reports" className="w-full mb-12">
+          <TabsList className="grid w-full grid-cols-3 mb-8 bg-white/70 backdrop-blur-sm">
+            <TabsTrigger value="reports" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Medical Reports</TabsTrigger>
+            <TabsTrigger value="medicine" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Medicine Lookup</TabsTrigger>
+            <TabsTrigger value="family" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Family Members</TabsTrigger>
+          </TabsList>
           
-          {/* Upload Medical Reports */}
-          <Card id="upload" className="medical-card p-10 glass-effect">
-            <div className="flex items-center mb-8">
-              <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-2xl mr-6 shadow-lg">
-                <FileText className="w-10 h-10 text-blue-700 medical-icon" />
+          <TabsContent value="reports" className="space-y-6">
+            <Card id="upload" className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
+              <div className="flex items-center mb-8">
+                <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-2xl mr-6 shadow-lg">
+                  <FileText className="w-10 h-10 text-blue-700 medical-icon" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold text-slate-900">Upload Medical Report</h3>
+                  <p className="text-slate-600 text-lg">Get AI-powered explanations of your lab results with person-specific context</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-3xl font-bold text-slate-900">Upload Medical Report</h3>
-                <p className="text-slate-600 text-lg">Get AI-powered explanations of your lab results</p>
-              </div>
-            </div>
 
-            <FileUpload 
-              onAnalysisComplete={handleReportAnalysis} 
-              onError={handleError}
-            />
-            
-            <div className="mt-6 flex justify-center space-x-3">
-              <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">ECG Reports</span>
-              <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Blood Tests</span>
-              <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">X-Rays</span>
-            </div>
-          </Card>
-
-          {/* Medicine Lookup */}
-          <Card id="medicine" className="medical-card p-10 glass-effect">
-            <div className="flex items-center mb-8">
-              <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-4 rounded-2xl mr-6 shadow-lg">
-                <Search className="w-10 h-10 text-teal-700 medical-icon" />
+              <FileUploadWithPerson 
+                onAnalysisComplete={handleReportAnalysis}
+                selectedPersonId={selectedPersonId}
+                onPersonSelect={setSelectedPersonId}
+              />
+              
+              <div className="mt-6 flex justify-center space-x-3">
+                <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">ECG Reports</span>
+                <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Blood Tests</span>
+                <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">X-Rays</span>
               </div>
-              <div>
-                <h3 className="text-3xl font-bold text-slate-900">Medicine Information</h3>
-                <p className="text-slate-600 text-lg">Learn about medicines in simple terms</p>
-              </div>
-            </div>
+            </Card>
+          </TabsContent>
 
-            <MedicineSearch 
-              onSearchComplete={handleMedicineResult}
-              onError={handleError}
-            />
-            
-            <div className="mt-6 flex justify-center space-x-3">
-              <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Uses & Effects</span>
-              <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Side Effects</span>
-              <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Interactions</span>
-            </div>
-          </Card>
-        </div>
+          <TabsContent value="medicine" className="space-y-6">
+            <Card id="medicine" className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
+              <div className="flex items-center mb-8">
+                <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-4 rounded-2xl mr-6 shadow-lg">
+                  <Search className="w-10 h-10 text-teal-700 medical-icon" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold text-slate-900">Medicine Information</h3>
+                  <p className="text-slate-600 text-lg">Learn about medicines in simple terms</p>
+                </div>
+              </div>
+
+              <MedicineSearch 
+                onSearchComplete={handleMedicineResult}
+                onError={handleError}
+              />
+              
+              <div className="mt-6 flex justify-center space-x-3">
+                <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Uses & Effects</span>
+                <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Side Effects</span>
+                <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Interactions</span>
+              </div>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="family" className="space-y-6">
+            <Card className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
+              <div className="flex items-center mb-8">
+                <div className="bg-gradient-to-br from-purple-100 to-pink-200 p-4 rounded-2xl mr-6 shadow-lg">
+                  <Users className="w-10 h-10 text-purple-700 medical-icon" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold text-slate-900">Family Member Management</h3>
+                  <p className="text-slate-600 text-lg">Add family members to track their medical reports with personal context</p>
+                </div>
+              </div>
+
+              <PersonManagement 
+                selectedPersonId={selectedPersonId}
+                onPersonSelect={setSelectedPersonId}
+              />
+              
+              <div className="mt-6 flex justify-center space-x-3">
+                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Individual Profiles</span>
+                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Separate Histories</span>
+                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Context Matching</span>
+              </div>
+            </Card>
+          </TabsContent>
+        </Tabs>
 
         {/* Results Section */}
         {activeResult && (

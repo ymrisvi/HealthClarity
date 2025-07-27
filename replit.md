@@ -48,11 +48,13 @@ The application follows a modern full-stack architecture with clear separation b
 - **Schema**: Defined in `shared/schema.ts` with user-linked data:
   - `users`: Stores user profile information from Replit Auth (enhanced with admin fields)
   - `sessions`: Session storage for authentication persistence
-  - `medical_reports`: User-linked medical reports with analysis results
-  - `medicine_searches`: User-linked medicine lookup cache
-  - `user_activity`: Tracks all user actions for admin analytics (logins, uploads, searches)
+  - `persons`: Individual family member profiles with personal details (name, age, sex, height, weight)
+  - `medical_reports`: User-linked medical reports with optional person assignment for family-based tracking
+  - `medicine_searches`: User-linked medicine lookup cache with optional person assignment
+  - `user_activity`: Tracks all user actions for admin analytics (logins, uploads, searches, person management)
   - `usage_stats`: Daily aggregated usage statistics for admin dashboard
-- **Storage Implementation**: DatabaseStorage class with user relationship tracking
+- **Storage Implementation**: DatabaseStorage class with user and person relationship tracking
+- **Person Management**: Full CRUD operations for family member profiles with medical report association
 - **Fallback**: MemStorage class available for development/testing (not currently used)
 
 ### AI Integration Services
@@ -74,10 +76,17 @@ The application follows a modern full-stack architecture with clear separation b
   - `HistoryView`: Complete analysis history with timestamps
   - `Landing`: Dedicated landing page for anonymous users showcasing social login options
 - **Core Components**: 
-  - `FileUpload`: Drag-and-drop file upload with validation
+  - `FileUpload`: Drag-and-drop file upload with validation (legacy component)
+  - `FileUploadWithPerson`: Enhanced file upload component with person selection for family-based tracking
+  - `PersonManagement`: Complete family member management with CRUD operations and profile display
   - `MedicineSearch`: Medicine lookup with search suggestions
   - `ResultsDisplay`: Structured display of AI analysis results
   - `MedicalDisclaimer`: Important safety information
+- **Person Management Features**:
+  - Individual family member profiles with personal details (age, sex, height, weight)
+  - Person-specific medical report tracking and history
+  - Visual person selector with profile cards and editing capabilities
+  - Contextual AI analysis based on person demographics
 - **Contact & Legal Pages**:
   - `Contact`: Simple contact page displaying mohideenrisviy@gmail.com for direct email communication
   - `Privacy`: Detailed privacy policy covering data handling and user rights

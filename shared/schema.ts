@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, jsonb, index, boolean, integer, date } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, jsonb, index, boolean, integer, date, decimal } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
@@ -30,9 +30,25 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Persons table - individuals for whom medical reports can be tracked
+export const persons = pgTable("persons", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  name: varchar("name").notNull(),
+  age: integer("age"),
+  sex: varchar("sex"), // 'Male', 'Female', 'Other'
+  height: decimal("height", { precision: 5, scale: 2 }), // in cm
+  weight: decimal("weight", { precision: 5, scale: 2 }), // in kg
+  relationship: varchar("relationship"), // 'Self', 'Spouse', 'Child', 'Parent', 'Other'
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 export const medicalReports = pgTable("medical_reports", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").references(() => users.id),
+  personId: varchar("person_id").references(() => persons.id),
   fileName: text("file_name").notNull(),
   fileType: text("file_type").notNull(),
   extractedText: text("extracted_text"),
@@ -43,6 +59,7 @@ export const medicalReports = pgTable("medical_reports", {
 export const medicineSearches = pgTable("medicine_searches", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").references(() => users.id),
+  personId: varchar("person_id").references(() => persons.id),
   medicineName: text("medicine_name").notNull(),
   searchResult: jsonb("search_result"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -69,10 +86,20 @@ export const usageStats = pgTable("usage_stats", {
 
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
+  persons: many(persons),
   medicalReports: many(medicalReports),
   medicineSearches: many(medicineSearches),
   userActivity: many(userActivity),
   usageStats: many(usageStats),
+}));
+
+export const personsRelations = relations(persons, ({ one, many }) => ({
+  user: one(users, {
+    fields: [persons.userId],
+    references: [users.id],
+  }),
+  medicalReports: many(medicalReports),
+  medicineSearches: many(medicineSearches),
 }));
 
 export const medicalReportsRelations = relations(medicalReports, ({ one }) => ({
@@ -80,12 +107,20 @@ export const medicalReportsRelations = relations(medicalReports, ({ one }) => ({
     fields: [medicalReports.userId],
     references: [users.id],
   }),
+  person: one(persons, {
+    fields: [medicalReports.personId],
+    references: [persons.id],
+  }),
 }));
 
 export const medicineSearchesRelations = relations(medicineSearches, ({ one }) => ({
   user: one(users, {
     fields: [medicineSearches.userId],
     references: [users.id],
+  }),
+  person: one(persons, {
+    fields: [medicineSearches.personId],
+    references: [persons.id],
   }),
 }));
 
@@ -103,6 +138,18 @@ export const usageStatsRelations = relations(usageStats, ({ one }) => ({
   }),
 }));
 
+export const insertPersonSchema = createInsertSchema(persons).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  age: z.number().int().min(0).max(120).optional(),
+  sex: z.enum(['Male', 'Female', 'Other']).optional(),
+  height: z.number().positive().optional(),
+  weight: z.number().positive().optional(),
+  relationship: z.enum(['Self', 'Spouse', 'Child', 'Parent', 'Sibling', 'Other']).optional(),
+});
+
 export const insertMedicalReportSchema = createInsertSchema(medicalReports).omit({
   id: true,
   createdAt: true,
@@ -117,6 +164,9 @@ export const upsertUserSchema = createInsertSchema(users).omit({
   createdAt: true,
   updatedAt: true,
 });
+
+export type InsertPerson = z.infer<typeof insertPersonSchema>;
+export type Person = typeof persons.$inferSelect;
 
 export type InsertMedicalReport = z.infer<typeof insertMedicalReportSchema>;
 export type MedicalReport = typeof medicalReports.$inferSelect;
