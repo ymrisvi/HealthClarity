@@ -20,6 +20,19 @@ export default function ResultsDisplay({ type, data, onClose }: ResultsDisplayPr
 
 function ReportResults({ data, onClose }: { data: { analysis: MedicalAnalysis }, onClose: () => void }) {
   const { analysis } = data;
+  
+  // Handle cases where analysis might be undefined or incomplete
+  if (!analysis || !analysis.reportType) {
+    return (
+      <Card className="shadow-lg border border-slate-200 mb-8">
+        <div className="p-8">
+          <div className="text-center">
+            <p className="text-slate-600">Analysis results are being processed...</p>
+          </div>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="shadow-lg border border-slate-200 mb-8">

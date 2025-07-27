@@ -258,8 +258,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Analyze the extracted text
-      const analysis = await analyzeMedicalReport(extractedText);
+      // Get person context if personId is provided
+      let personContext = undefined;
+      if (personId) {
+        const person = await storage.getPerson(personId);
+        if (person) {
+          personContext = {
+            name: person.name,
+            age: person.age || undefined,
+            sex: person.sex || undefined,
+            height: typeof person.height === 'number' ? person.height : undefined,
+            weight: typeof person.weight === 'number' ? person.weight : undefined,
+          };
+        }
+      }
+
+      // Analyze the extracted text with person context
+      const analysis = await analyzeMedicalReport(extractedText, undefined, personContext);
 
       // Get user ID if authenticated, otherwise null
       const userId = req.isAuthenticated() ? req.user.claims.sub : null;

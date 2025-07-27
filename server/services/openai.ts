@@ -6,19 +6,37 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || process.env.OPENAI_KEY || process.env.API_KEY 
 });
 
-export async function analyzeMedicalReport(extractedText: string, reportType?: string): Promise<MedicalAnalysis> {
+export async function analyzeMedicalReport(
+  extractedText: string, 
+  reportType?: string, 
+  personContext?: { name: string; age?: number; sex?: string; height?: number; weight?: number }
+): Promise<MedicalAnalysis> {
   try {
+    let contextInfo = "";
+    if (personContext) {
+      contextInfo = `
+    
+    Patient context for this analysis:
+    - Name: ${personContext.name}
+    ${personContext.age ? `- Age: ${personContext.age} years old` : ''}
+    ${personContext.sex ? `- Sex: ${personContext.sex}` : ''}
+    ${personContext.height ? `- Height: ${personContext.height} cm` : ''}
+    ${personContext.weight ? `- Weight: ${personContext.weight} kg` : ''}
+    
+    Please consider this person's demographics when explaining the results and reference ranges.`;
+    }
+
     const prompt = `You are a medical expert tasked with explaining medical reports in simple, non-technical language. 
     
     Analyze the following medical report text and provide a clear explanation suitable for patients:
     
-    "${extractedText}"
+    "${extractedText}"${contextInfo}
     
     Please respond with a JSON object containing:
-    - summary: A brief overview of what this report shows
-    - normalResults: Array of findings that are within normal ranges (explain in simple terms)
-    - needsAttention: Array of findings that may need attention (explain in simple terms, no medical jargon)
-    - explanation: A paragraph explaining what these results mean for the patient's health
+    - summary: A brief overview of what this report shows${personContext ? ` for ${personContext.name}` : ''}
+    - normalResults: Array of findings that are within normal ranges (explain in simple terms, consider age/sex specific ranges where relevant)
+    - needsAttention: Array of findings that may need attention (explain in simple terms, no medical jargon, consider demographic context)
+    - explanation: A paragraph explaining what these results mean for the patient's health${personContext ? `, taking into account their age and demographics` : ''}
     - reportType: The type of medical report this appears to be (e.g., "Blood Test", "ECG", "X-Ray", etc.)
     
     Use simple language, avoid medical jargon, and focus on helping the patient understand their results without providing medical advice or recommendations.`;
