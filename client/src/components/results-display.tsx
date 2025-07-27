@@ -18,8 +18,8 @@ export default function ResultsDisplay({ type, data, onClose }: ResultsDisplayPr
   }
 }
 
-function ReportResults({ data, onClose }: { data: { analysis: MedicalAnalysis }, onClose: () => void }) {
-  const { analysis } = data;
+function ReportResults({ data, onClose }: { data: { analysis: MedicalAnalysis; person?: { name: string; age?: number; sex?: string } }, onClose: () => void }) {
+  const { analysis, person } = data;
   
   // Handle cases where analysis might be undefined or incomplete
   if (!analysis || !analysis.reportType) {
@@ -43,8 +43,15 @@ function ReportResults({ data, onClose }: { data: { analysis: MedicalAnalysis },
               <CheckCircle className="w-8 h-8 text-mint-green" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-slate-900">Your Report Analysis</h3>
-              <p className="text-slate-600">Understanding your medical results in simple terms</p>
+              <h3 className="text-2xl font-bold text-slate-900">
+                {person ? `${person.name}'s Report Analysis` : 'Your Report Analysis'}
+              </h3>
+              <p className="text-slate-600">
+                {person 
+                  ? `Personalized analysis for ${person.name}${person.age ? ` (${person.age} years old)` : ''}${person.sex ? `, ${person.sex}` : ''}`
+                  : 'Understanding your medical results in simple terms'
+                }
+              </p>
             </div>
           </div>
           <Button

@@ -306,6 +306,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         reportId: savedReport.id,
         analysis,
+        person: personContext, // Include person context in response
         extractedText: extractedText.substring(0, 500) + (extractedText.length > 500 ? '...' : ''), // Return truncated text for reference
       });
 

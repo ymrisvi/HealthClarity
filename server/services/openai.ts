@@ -13,40 +13,71 @@ export async function analyzeMedicalReport(
 ): Promise<MedicalAnalysis> {
   try {
     let contextInfo = "";
+    let bmiInfo = "";
+    
     if (personContext) {
+      // Calculate BMI if height and weight are available
+      if (personContext.height && personContext.weight) {
+        const heightInM = personContext.height / 100;
+        const bmi = (personContext.weight / (heightInM * heightInM)).toFixed(1);
+        bmiInfo = `- BMI: ${bmi} (calculated from height/weight)`;
+      }
+      
       contextInfo = `
     
-    Patient context for this analysis:
+    PATIENT PROFILE FOR PERSONALIZED ANALYSIS:
     - Name: ${personContext.name}
     ${personContext.age ? `- Age: ${personContext.age} years old` : ''}
     ${personContext.sex ? `- Sex: ${personContext.sex}` : ''}
     ${personContext.height ? `- Height: ${personContext.height} cm` : ''}
     ${personContext.weight ? `- Weight: ${personContext.weight} kg` : ''}
+    ${bmiInfo}
     
-    Please consider this person's demographics when explaining the results and reference ranges.`;
+    IMPORTANT: Use this demographic information to:
+    1. Apply age and sex-specific reference ranges for all values
+    2. Mention the person by name throughout the analysis
+    3. Consider demographic factors (e.g., age-related normal variations, sex-specific ranges)
+    4. Explain how results relate specifically to someone of their age, sex, and physical characteristics
+    5. Use BMI context if weight/height related findings are present`;
     }
 
-    const prompt = `You are a medical expert tasked with explaining medical reports in simple, non-technical language. 
+    const prompt = `You are a medical expert providing personalized explanations of medical reports in simple, non-technical language.
     
-    Analyze the following medical report text and provide a clear explanation suitable for patients:
+    Analyze this medical report and provide a detailed, person-specific explanation:
     
     "${extractedText}"${contextInfo}
     
-    Please respond with a JSON object containing:
-    - summary: A brief overview of what this report shows${personContext ? ` for ${personContext.name}` : ''}
-    - normalResults: Array of findings that are within normal ranges (explain in simple terms, consider age/sex specific ranges where relevant)
-    - needsAttention: Array of findings that may need attention (explain in simple terms, no medical jargon, consider demographic context)
-    - explanation: A paragraph explaining what these results mean for the patient's health${personContext ? `, taking into account their age and demographics` : ''}
-    - reportType: The type of medical report this appears to be (e.g., "Blood Test", "ECG", "X-Ray", etc.)
+    Respond with a JSON object containing:
+    - summary: A personalized overview${personContext ? ` specifically for ${personContext.name}, mentioning their age/sex where relevant to the findings` : ''}
+    - normalResults: Array of normal findings with person-specific context (e.g., "For a ${personContext?.age}-year-old ${personContext?.sex?.toLowerCase()}, this cholesterol level of X is excellent/normal...")
+    - needsAttention: Array of concerning findings with demographic context (e.g., "For someone of ${personContext?.name}'s age and sex, this reading suggests...")
+    - explanation: A detailed paragraph${personContext ? ` addressing ${personContext.name} personally, explaining how their age, sex, and physical characteristics relate to these results. Use "your" when appropriate` : ''}
+    - reportType: The type of medical report
     
-    Use simple language, avoid medical jargon, and focus on helping the patient understand their results without providing medical advice or recommendations.`;
+    PERSONALIZATION REQUIREMENTS:
+    ${personContext ? `
+    - Address ${personContext.name} by name throughout
+    - Reference their specific age (${personContext.age}) and sex (${personContext.sex}) in explanations
+    - Apply age/sex-specific normal ranges where applicable
+    - Consider their BMI context if relevant to findings
+    - Use second person ("your results show...") for more personal connection
+    ` : ''}
+    
+    Use simple language, avoid medical jargon, and make the explanation feel personalized and relevant to their specific demographic profile.`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
           role: "system",
-          content: "You are a helpful medical information assistant. Explain medical reports in simple terms without providing medical advice or recommendations. Always remind users to consult healthcare professionals for medical decisions."
+          content: `You are a compassionate medical information assistant specializing in personalized explanations. Your role is to:
+          1. Explain medical reports in simple, personalized terms using the patient's demographic information
+          2. Apply age and sex-specific reference ranges when interpreting results
+          3. Address the patient by name and use "your" to create personal connection
+          4. Consider how age, sex, height, weight, and BMI relate to the findings
+          5. Never provide medical advice or treatment recommendations
+          6. Always encourage consulting healthcare professionals for medical decisions
+          7. Make explanations feel relevant and specific to the individual patient`
         },
         {
           role: "user",
