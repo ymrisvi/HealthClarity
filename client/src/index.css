@@ -119,6 +119,15 @@
   color: var(--mint-green-dark);
 }
 
+/* Enhanced drop shadows for better icon visibility */
+.drop-shadow-sm {
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.5));
+}
+
+.drop-shadow-lg {
+  filter: drop-shadow(0 4px 8px rgb(0 0 0 / 0.25));
+}
+
 /* Hover effects for medical theme colors */
 .hover\:bg-medical-blue:hover {
   background-color: hsl(207, 90%, 48%);

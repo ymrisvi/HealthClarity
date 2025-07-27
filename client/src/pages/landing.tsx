@@ -136,8 +136,8 @@ export default function Landing() {
             {/* Company Info */}
             <div className="md:col-span-2">
               <div className="flex items-center mb-4">
-                <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-2 rounded-lg mr-3">
-                  <Activity className="w-6 h-6 text-white" />
+                <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-2 rounded-lg mr-3">
+                  <Activity className="w-6 h-6 text-white drop-shadow-sm" />
                 </div>
                 <h3 className="text-xl font-bold">MedReport Assistant</h3>
               </div>

@@ -109,8 +109,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-3 rounded-xl shadow-lg">
-                <Activity className="w-8 h-8 text-white" />
+              <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-3 rounded-xl shadow-lg">
+                <Activity className="w-8 h-8 text-white drop-shadow-sm" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold gradient-text">MedReport Assistant</h1>
@@ -164,8 +164,8 @@ export default function Home() {
         
         {/* Enhanced Hero Section */}
         <div className="text-center mb-12">
-          <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl floating">
-            <Heart className="w-12 h-12 text-white pulse-slow" />
+          <div className="bg-gradient-to-br from-blue-600 to-teal-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl floating">
+            <Heart className="w-12 h-12 text-white drop-shadow-lg pulse-slow" />
           </div>
           <h2 className="text-5xl font-bold gradient-text mb-4">Understanding Your Health Information</h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
@@ -306,8 +306,8 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="bg-medical-blue p-2 rounded-lg">
-                  <FileText className="w-6 h-6 text-white" />
+                <div className="bg-blue-600 p-2 rounded-lg">
+                  <FileText className="w-6 h-6 text-white drop-shadow-sm" />
                 </div>
                 <span className="text-xl font-bold">MedReport Assistant</span>
               </div>

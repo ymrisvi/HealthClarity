@@ -126,8 +126,8 @@ export default function FileUpload({ onAnalysisComplete, onError }: FileUploadPr
           onChange={handleFileInputChange}
         />
         
-        <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-6 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg floating">
-          <Upload className="w-10 h-10 text-white" />
+        <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-6 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg floating">
+          <Upload className="w-10 h-10 text-white drop-shadow-lg" />
         </div>
         
         <h4 className="text-2xl font-bold text-slate-900 mb-3">
@@ -164,8 +164,8 @@ export default function FileUpload({ onAnalysisComplete, onError }: FileUploadPr
         <div className="glass-effect rounded-2xl p-6 medical-card">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-3 rounded-xl shadow-lg">
-                <FileText className="w-8 h-8 text-white" />
+              <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-3 rounded-xl shadow-lg">
+                <FileText className="w-8 h-8 text-white drop-shadow-sm" />
               </div>
               <div>
                 <p className="font-bold text-slate-900 text-lg">{selectedFile.name}</p>
