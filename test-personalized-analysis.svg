@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="white" stroke="black" stroke-width="2"/>
+  
+  <!-- Header -->
+  <text x="400" y="40" text-anchor="middle" font-size="24" font-weight="bold">BLOOD TEST RESULTS</text>
+  <text x="50" y="70" font-size="14">Patient: Test Subject</text>
+  <text x="400" y="70" font-size="14">Date: January 27, 2025</text>
+  <text x="600" y="70" font-size="14">Lab ID: BT-2025-001</text>
+  
+  <!-- Test Results Table -->
+  <rect x="50" y="100" width="700" height="30" fill="#f0f0f0" stroke="black"/>
+  <text x="80" y="120" font-size="14" font-weight="bold">Test</text>
+  <text x="300" y="120" font-size="14" font-weight="bold">Result</text>
+  <text x="450" y="120" font-size="14" font-weight="bold">Reference Range</text>
+  <text x="650" y="120" font-size="14" font-weight="bold">Status</text>
+  
+  <!-- Cholesterol Total -->
+  <rect x="50" y="130" width="700" height="25" fill="white" stroke="gray"/>
+  <text x="80" y="148" font-size="12">Total Cholesterol</text>
+  <text x="300" y="148" font-size="12">220 mg/dL</text>
+  <text x="450" y="148" font-size="12">&lt; 200 mg/dL</text>
+  <text x="650" y="148" font-size="12" fill="orange">HIGH</text>
+  
+  <!-- HDL Cholesterol -->
+  <rect x="50" y="155" width="700" height="25" fill="#f9f9f9" stroke="gray"/>
+  <text x="80" y="173" font-size="12">HDL Cholesterol</text>
+  <text x="300" y="173" font-size="12">55 mg/dL</text>
+  <text x="450" y="173" font-size="12">&gt; 40 mg/dL (M), &gt; 50 mg/dL (F)</text>
+  <text x="650" y="173" font-size="12" fill="green">NORMAL</text>
+  
+  <!-- LDL Cholesterol -->
+  <rect x="50" y="180" width="700" height="25" fill="white" stroke="gray"/>
+  <text x="80" y="198" font-size="12">LDL Cholesterol</text>
+  <text x="300" y="198" font-size="12">140 mg/dL</text>
+  <text x="450" y="198" font-size="12">&lt; 100 mg/dL</text>
+  <text x="650" y="198" font-size="12" fill="red">HIGH</text>
+  
+  <!-- Triglycerides -->
+  <rect x="50" y="205" width="700" height="25" fill="#f9f9f9" stroke="gray"/>
+  <text x="80" y="223" font-size="12">Triglycerides</text>
+  <text x="300" y="223" font-size="12">125 mg/dL</text>
+  <text x="450" y="223" font-size="12">&lt; 150 mg/dL</text>
+  <text x="650" y="223" font-size="12" fill="green">NORMAL</text>
+  
+  <!-- Blood Glucose -->
+  <rect x="50" y="230" width="700" height="25" fill="white" stroke="gray"/>
+  <text x="80" y="248" font-size="12">Fasting Glucose</text>
+  <text x="300" y="248" font-size="12">95 mg/dL</text>
+  <text x="450" y="248" font-size="12">70-100 mg/dL</text>
+  <text x="650" y="248" font-size="12" fill="green">NORMAL</text>
+  
+  <!-- HbA1c -->
+  <rect x="50" y="255" width="700" height="25" fill="#f9f9f9" stroke="gray"/>
+  <text x="80" y="273" font-size="12">HbA1c</text>
+  <text x="300" y="273" font-size="12">5.4%</text>
+  <text x="450" y="273" font-size="12">&lt; 5.7%</text>
+  <text x="650" y="273" font-size="12" fill="green">NORMAL</text>
+  
+  <!-- Blood Pressure -->
+  <rect x="50" y="280" width="700" height="25" fill="white" stroke="gray"/>
+  <text x="80" y="298" font-size="12">Blood Pressure</text>
+  <text x="300" y="298" font-size="12">135/85 mmHg</text>
+  <text x="450" y="298" font-size="12">&lt; 120/80 mmHg</text>
+  <text x="650" y="298" font-size="12" fill="orange">ELEVATED</text>
+  
+  <!-- BMI -->
+  <rect x="50" y="305" width="700" height="25" fill="#f9f9f9" stroke="gray"/>
+  <text x="80" y="323" font-size="12">BMI</text>
+  <text x="300" y="323" font-size="12">27.8 kg/m²</text>
+  <text x="450" y="323" font-size="12">18.5-24.9 kg/m²</text>
+  <text x="650" y="323" font-size="12" fill="orange">OVERWEIGHT</text>
+  
+  <!-- Footer -->
+  <text x="50" y="380" font-size="12" font-weight="bold">Clinical Notes:</text>
+  <text x="50" y="400" font-size="11">Patient shows elevated cholesterol levels and blood pressure.</text>
+  <text x="50" y="415" font-size="11">BMI indicates overweight status. Recommend lifestyle modifications.</text>
+  <text x="50" y="430" font-size="11">Follow-up in 3 months to reassess lipid profile.</text>
+  
+  <text x="50" y="480" font-size="10">Performed by: Dr. Sarah Johnson, MD</text>
+  <text x="50" y="495" font-size="10">Medical Center Laboratory</text>
+  <text x="50" y="510" font-size="10">Certified by CAP and CLIA</text>
+</svg>
