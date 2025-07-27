@@ -60,14 +60,18 @@ export default function AdminDashboard() {
   const [location, navigate] = useLocation();
   const { toast } = useToast();
 
+  console.log('AdminDashboard render - user:', user, 'isAuthenticated:', isAuthenticated);
+
   // Check if user is admin
   useEffect(() => {
     if (!isAuthenticated) {
+      console.log('Not authenticated, redirecting to home');
       navigate('/');
       return;
     }
     
     if (user && !user.isAdmin) {
+      console.log('User is not admin, redirecting');
       toast({
         title: "Access Denied",
         description: "You don't have admin privileges to access this page.",

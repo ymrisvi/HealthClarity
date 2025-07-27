@@ -25,10 +25,12 @@ function Router() {
     );
   }
 
+  console.log('Router render - isAuthenticated:', isAuthenticated, 'isLoading:', isLoading);
+
   return (
     <Switch>
-      <Route path="/" component={isAuthenticated ? Home : Landing} />
       <Route path="/admin" component={AdminDashboard} />
+      <Route path="/" component={isAuthenticated ? Home : Landing} />
       <Route component={NotFound} />
     </Switch>
   );
