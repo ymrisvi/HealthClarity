@@ -386,7 +386,7 @@ Reply directly to this email to respond to the user.
 
       await mailService.send({
         to: 'mohideenrisviy@gmail.com',
-        from: 'noreply@medreport-assistant.com', // This should be a verified sender in SendGrid
+        from: 'mohideenrisviy@gmail.com', // Use the same email as both sender and recipient
         replyTo: email, // User can reply directly to the sender
         subject: `Contact Form: ${subject}`,
         text: emailContent,
@@ -394,9 +394,21 @@ Reply directly to this email to respond to the user.
       });
 
       res.json({ message: "Message sent successfully" });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending contact email:", error);
-      res.status(500).json({ message: "Failed to send message" });
+      
+      // Log the specific SendGrid error for debugging
+      if (error.response && error.response.body) {
+        console.error("SendGrid error details:", JSON.stringify(error.response.body, null, 2));
+      }
+      
+      // Return more specific error message
+      let errorMessage = "Failed to send message";
+      if (error.code === 403) {
+        errorMessage = "Email service configuration issue. Please contact support.";
+      }
+      
+      res.status(500).json({ message: errorMessage });
     }
   });
 
