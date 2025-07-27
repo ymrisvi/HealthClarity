@@ -78,24 +78,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/user/history', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
-      const [medicalReports, medicineSearches] = await Promise.all([
+      const [medicalReports, medicineSearches, persons] = await Promise.all([
         storage.getUserMedicalReports(userId),
-        storage.getUserMedicineSearches(userId)
+        storage.getUserMedicineSearches(userId),
+        storage.getUserPersons(userId)
       ]);
       
       res.json({
         medicalReports: medicalReports.map(report => ({
           id: report.id,
           fileName: report.fileName,
+          personId: report.personId,
           analysis: report.analysis,
           createdAt: report.createdAt
         })),
         medicineSearches: medicineSearches.map(search => ({
           id: search.id,
           medicineName: search.medicineName,
+          personId: search.personId,
           searchResult: search.searchResult,
           createdAt: search.createdAt
-        }))
+        })),
+        persons: persons
       });
     } catch (error) {
       console.error("Error fetching user history:", error);
