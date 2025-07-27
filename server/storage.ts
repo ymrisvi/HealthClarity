@@ -2,15 +2,18 @@ import {
   medicalReports, 
   medicineSearches, 
   users,
+  userActivity,
   type MedicalReport, 
   type InsertMedicalReport, 
   type MedicineSearch, 
   type InsertMedicineSearch,
   type User,
-  type UpsertUser
+  type UpsertUser,
+  type UserActivity,
+  type InsertUserActivity
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, count, gte, sql } from "drizzle-orm";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -31,6 +34,13 @@ export interface IStorage {
   // Usage tracking for anonymous users
   getAnonymousUsageCount(sessionId: string): Promise<number>;
   incrementAnonymousUsage(sessionId: string): Promise<void>;
+  
+  // Admin operations
+  getAllUsers(): Promise<User[]>;
+  getUserActivity(limit?: number): Promise<any[]>;
+  getAdminStats(): Promise<any>;
+  trackUserActivity(userId: string, activityType: string, details?: any): Promise<void>;
+  incrementUserUsage(userId: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -45,16 +55,107 @@ export class DatabaseStorage implements IStorage {
   async upsertUser(userData: UpsertUser): Promise<User> {
     const [user] = await db
       .insert(users)
-      .values(userData)
+      .values({
+        ...userData,
+        lastVisit: new Date(),
+        totalVisits: 1,
+      })
       .onConflictDoUpdate({
         target: users.id,
         set: {
           ...userData,
           updatedAt: new Date(),
+          lastVisit: new Date(),
+          totalVisits: sql`${users.totalVisits} + 1`,
         },
       })
       .returning();
     return user;
+  }
+
+  // Admin-specific methods
+  async getAllUsers(): Promise<User[]> {
+    return await db.select().from(users).orderBy(desc(users.createdAt));
+  }
+
+  async getUserActivity(limit: number = 50): Promise<any[]> {
+    return await db
+      .select({
+        id: userActivity.id,
+        userId: userActivity.userId,
+        activityType: userActivity.activityType,
+        details: userActivity.details,
+        timestamp: userActivity.timestamp,
+        user: {
+          email: users.email,
+          firstName: users.firstName,
+          lastName: users.lastName,
+        },
+      })
+      .from(userActivity)
+      .leftJoin(users, eq(userActivity.userId, users.id))
+      .orderBy(desc(userActivity.timestamp))
+      .limit(limit);
+  }
+
+  async getAdminStats(): Promise<any> {
+    const [totalUsers] = await db.select({ count: count() }).from(users);
+    
+    const [totalReports] = await db.select({ count: count() }).from(medicalReports);
+    
+    const [totalMedicineSearches] = await db.select({ count: count() }).from(medicineSearches);
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const [activeUsersToday] = await db
+      .select({ count: count() })
+      .from(users)
+      .where(gte(users.lastVisit, today));
+    
+    const [reportsToday] = await db
+      .select({ count: count() })
+      .from(medicalReports)
+      .where(gte(medicalReports.createdAt, today));
+    
+    const [searchesToday] = await db
+      .select({ count: count() })
+      .from(medicineSearches)
+      .where(gte(medicineSearches.createdAt, today));
+    
+    const [avgUsage] = await db
+      .select({ 
+        avg: sql<number>`AVG(CAST(${users.usageCount} AS FLOAT))` 
+      })
+      .from(users);
+
+    return {
+      totalUsers: totalUsers.count,
+      activeUsersToday: activeUsersToday.count,
+      totalReports: totalReports.count,
+      totalMedicineSearches: totalMedicineSearches.count,
+      reportsToday: reportsToday.count,
+      searchesToday: searchesToday.count,
+      averageUsagePerUser: avgUsage.avg || 0,
+    };
+  }
+
+  async trackUserActivity(userId: string, activityType: string, details?: any): Promise<void> {
+    await db.insert(userActivity).values({
+      userId,
+      activityType,
+      details,
+    });
+  }
+
+  async incrementUserUsage(userId: string): Promise<void> {
+    await db
+      .update(users)
+      .set({
+        usageCount: sql`${users.usageCount} + 1`,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, userId));
   }
 
   // Medical Reports

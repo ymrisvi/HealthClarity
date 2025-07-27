@@ -11,6 +11,8 @@ import { Card } from "@/components/ui/card";
 import { FileText, Search, Shield, Info, Users, Lock, Activity, Heart } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { isUsageLimitError } from "@/lib/authUtils";
+import { useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [activeResult, setActiveResult] = useState<{
@@ -19,8 +21,9 @@ export default function Home() {
   } | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [usageLimitReached, setUsageLimitReached] = useState(false);
+  const [location, navigate] = useLocation();
   
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   const handleReportAnalysis = (data: any) => {
     setActiveResult({ type: 'report', data });
@@ -129,7 +132,18 @@ export default function Home() {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-mint-green transition-all duration-300 group-hover:w-full"></span>
                 </a>
               </nav>
-              <UserHeader onShowHistory={() => setShowHistory(true)} />
+              <div className="flex items-center space-x-4">
+                {user?.isAdmin && (
+                  <Button 
+                    onClick={() => navigate('/admin')}
+                    variant="outline"
+                    className="border-slate-300 hover:border-medical-blue"
+                  >
+                    Admin Panel
+                  </Button>
+                )}
+                <UserHeader onShowHistory={() => setShowHistory(true)} />
+              </div>
             </div>
           </div>
         </div>

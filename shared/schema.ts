@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, jsonb, index } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, jsonb, index, boolean, integer, date } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
@@ -22,6 +22,10 @@ export const users = pgTable("users", {
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
+  isAdmin: boolean("is_admin").default(false),
+  usageCount: integer("usage_count").default(0),
+  lastVisit: timestamp("last_visit"),
+  totalVisits: integer("total_visits").default(0),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -44,10 +48,31 @@ export const medicineSearches = pgTable("medicine_searches", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// User activity tracking table for admin analytics
+export const userActivity = pgTable("user_activity", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  activityType: varchar("activity_type").notNull(), // 'login', 'report_upload', 'medicine_search'
+  details: jsonb("details"),
+  timestamp: timestamp("timestamp").defaultNow(),
+});
+
+// Daily usage statistics for admin dashboard
+export const usageStats = pgTable("usage_stats", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  date: date("date").notNull(),
+  reportAnalyses: integer("report_analyses").default(0),
+  medicineSearches: integer("medicine_searches").default(0),
+  totalActions: integer("total_actions").default(0),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   medicalReports: many(medicalReports),
   medicineSearches: many(medicineSearches),
+  userActivity: many(userActivity),
+  usageStats: many(usageStats),
 }));
 
 export const medicalReportsRelations = relations(medicalReports, ({ one }) => ({
@@ -60,6 +85,20 @@ export const medicalReportsRelations = relations(medicalReports, ({ one }) => ({
 export const medicineSearchesRelations = relations(medicineSearches, ({ one }) => ({
   user: one(users, {
     fields: [medicineSearches.userId],
+    references: [users.id],
+  }),
+}));
+
+export const userActivityRelations = relations(userActivity, ({ one }) => ({
+  user: one(users, {
+    fields: [userActivity.userId],
+    references: [users.id],
+  }),
+}));
+
+export const usageStatsRelations = relations(usageStats, ({ one }) => ({
+  user: one(users, {
+    fields: [usageStats.userId],
     references: [users.id],
   }),
 }));
@@ -87,6 +126,11 @@ export type MedicineSearch = typeof medicineSearches.$inferSelect;
 
 export type UpsertUser = z.infer<typeof upsertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+export type UserActivity = typeof userActivity.$inferSelect;
+export type InsertUserActivity = typeof userActivity.$inferInsert;
+export type UsageStats = typeof usageStats.$inferSelect;
+export type InsertUsageStats = typeof usageStats.$inferInsert;
 
 // Response types for API
 export const medicalAnalysisSchema = z.object({

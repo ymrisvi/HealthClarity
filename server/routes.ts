@@ -51,6 +51,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const user = await storage.getUser(userId);
+      
+      // Track login activity
+      if (user) {
+        await storage.trackUserActivity(userId, 'login', {
+          timestamp: new Date().toISOString(),
+          userAgent: req.headers['user-agent']
+        });
+      }
+      
       res.json(user);
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -157,9 +166,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const savedReport = await storage.createMedicalReport(reportData);
 
-      // Track usage for anonymous users
+      // Track usage for anonymous users or increment user usage
       if (!req.isAuthenticated()) {
         await storage.incrementAnonymousUsage(req.sessionID);
+      } else {
+        await storage.incrementUserUsage(userId!);
+        await storage.trackUserActivity(userId!, 'report_upload', {
+          fileName: originalname,
+          fileType: mimetype,
+          reportId: savedReport.id
+        });
       }
 
       res.json({
@@ -238,9 +254,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const savedSearch = await storage.createMedicineSearch(searchData);
 
-      // Track usage for anonymous users
+      // Track usage for anonymous users or increment user usage
       if (!req.isAuthenticated()) {
         await storage.incrementAnonymousUsage(req.sessionID);
+      } else {
+        await storage.incrementUserUsage(userId!);
+        await storage.trackUserActivity(userId!, 'medicine_search', {
+          medicineName: cleanedName,
+          searchId: savedSearch.id
+        });
       }
 
       res.json({
@@ -271,6 +293,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Popular medicines error:", error);
       res.status(500).json({ message: "Failed to get popular medicines" });
+    }
+  });
+
+  // Admin routes for user analytics
+  app.get('/api/admin/users', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || !user.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const users = await storage.getAllUsers();
+      res.json(users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).json({ message: "Failed to fetch users" });
+    }
+  });
+
+  app.get('/api/admin/stats', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || !user.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const stats = await storage.getAdminStats();
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching admin stats:", error);
+      res.status(500).json({ message: "Failed to fetch admin stats" });
+    }
+  });
+
+  app.get('/api/admin/activities', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || !user.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const activities = await storage.getUserActivity(50);
+      res.json(activities);
+    } catch (error) {
+      console.error("Error fetching user activities:", error);
+      res.status(500).json({ message: "Failed to fetch user activities" });
     }
   });
 
