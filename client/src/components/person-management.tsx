@@ -354,12 +354,17 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground">
+                <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground mb-3">
                   {person.age && <div>Age: {person.age}</div>}
                   {person.sex && <div>Sex: {person.sex}</div>}
                   {person.height && <div>Height: {person.height} cm</div>}
                   {person.weight && <div>Weight: {person.weight} kg</div>}
                 </div>
+                {showPersonSelector && (
+                  <div className="text-xs text-blue-600 font-medium bg-blue-50 px-3 py-1 rounded-full text-center">
+                    Click to upload medical report for {person.name}
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}

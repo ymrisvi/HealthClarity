@@ -25,6 +25,7 @@ export default function Home() {
   const [showHistory, setShowHistory] = useState(false);
   const [usageLimitReached, setUsageLimitReached] = useState(false);
   const [selectedPersonId, setSelectedPersonId] = useState<string>("");
+  const [activeTab, setActiveTab] = useState("family");
   const [location, navigate] = useLocation();
   
   const { user, isAuthenticated } = useAuth();
@@ -176,13 +177,43 @@ export default function Home() {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="reports" className="w-full mb-12">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-12">
           <TabsList className="grid w-full grid-cols-3 mb-8 bg-white/70 backdrop-blur-sm">
+            <TabsTrigger value="family" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Family Members</TabsTrigger>
             <TabsTrigger value="reports" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Medical Reports</TabsTrigger>
             <TabsTrigger value="medicine" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Medicine Lookup</TabsTrigger>
-            <TabsTrigger value="family" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Family Members</TabsTrigger>
           </TabsList>
           
+          <TabsContent value="family" className="space-y-6">
+            <Card className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
+              <div className="flex items-center mb-8">
+                <div className="bg-gradient-to-br from-purple-100 to-pink-200 p-4 rounded-2xl mr-6 shadow-lg">
+                  <Users className="w-10 h-10 text-purple-700 medical-icon" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold text-slate-900">Family Member Management</h3>
+                  <p className="text-slate-600 text-lg">Add family members to track their medical reports with personal context</p>
+                </div>
+              </div>
+
+              <PersonManagement 
+                selectedPersonId={selectedPersonId}
+                onPersonSelect={(personId) => {
+                  setSelectedPersonId(personId);
+                  if (personId) {
+                    setActiveTab("reports");
+                  }
+                }}
+              />
+              
+              <div className="mt-6 flex justify-center space-x-3">
+                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Individual Profiles</span>
+                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Separate Histories</span>
+                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Context Matching</span>
+              </div>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="reports" className="space-y-6">
             <Card id="upload" className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
               <div className="flex items-center mb-8">
@@ -234,30 +265,7 @@ export default function Home() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="family" className="space-y-6">
-            <Card className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
-              <div className="flex items-center mb-8">
-                <div className="bg-gradient-to-br from-purple-100 to-pink-200 p-4 rounded-2xl mr-6 shadow-lg">
-                  <Users className="w-10 h-10 text-purple-700 medical-icon" />
-                </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-slate-900">Family Member Management</h3>
-                  <p className="text-slate-600 text-lg">Add family members to track their medical reports with personal context</p>
-                </div>
-              </div>
 
-              <PersonManagement 
-                selectedPersonId={selectedPersonId}
-                onPersonSelect={setSelectedPersonId}
-              />
-              
-              <div className="mt-6 flex justify-center space-x-3">
-                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Individual Profiles</span>
-                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Separate Histories</span>
-                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Context Matching</span>
-              </div>
-            </Card>
-          </TabsContent>
         </Tabs>
 
         {/* Results Section */}
