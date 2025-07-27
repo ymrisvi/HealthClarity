@@ -147,6 +147,13 @@ export default function Home() {
                   Medicine Lookup
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-healthcare-teal transition-all duration-300 group-hover:w-full"></span>
                 </a>
+                <button 
+                  onClick={() => navigate('/knowledge')}
+                  className="text-slate-700 hover:text-emerald-600 font-medium transition-colors relative group text-sm"
+                >
+                  Knowledge Base
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-600 transition-all duration-300 group-hover:w-full"></span>
+                </button>
               </nav>
               <div className="flex items-center space-x-2 sm:space-x-4">
                 {user?.isAdmin && (

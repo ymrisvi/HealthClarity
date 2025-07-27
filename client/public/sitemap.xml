@@ -36,4 +36,55 @@
     <priority>0.5</priority>
   </url>
   
+  
+  <!-- Knowledge Base -->
+  <url>
+    <loc>https://healthclarity.replit.app/knowledge</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Knowledge Articles -->
+  <url>
+    <loc>https://healthclarity.replit.app/knowledge/understanding-blood-test-results</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://healthclarity.replit.app/knowledge/ecg-ekg-basics-heart-rhythm</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://healthclarity.replit.app/knowledge/x-ray-reports-explained</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://healthclarity.replit.app/knowledge/medicine-interactions-guide</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://healthclarity.replit.app/knowledge/family-health-tracking-guide</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://healthclarity.replit.app/knowledge/when-to-see-doctor-red-flags</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

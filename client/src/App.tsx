@@ -7,6 +7,8 @@ import Home from "@/pages/home";
 import Landing from "@/pages/landing";
 import NotFound from "@/pages/not-found";
 import AdminDashboard from "@/pages/admin";
+import Knowledge from "@/pages/knowledge";
+import Article from "@/pages/article";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import Contact from "@/pages/contact";
@@ -33,6 +35,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/admin" component={AdminDashboard} />
+      <Route path="/knowledge" component={Knowledge} />
+      <Route path="/knowledge/:slug" component={Article} />
       <Route path="/contact" component={Contact} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/terms" component={Terms} />
