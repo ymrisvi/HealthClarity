@@ -13,11 +13,11 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024, // 10MB limit
   },
   fileFilter: (req, file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'application/pdf'];
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error('Invalid file type. Only JPEG, PNG, and PDF files are allowed.'));
+      cb(new Error('Invalid file type. Only JPEG, PNG, SVG, and PDF files are allowed.'));
     }
   },
 });
@@ -103,6 +103,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // For PDFs, we'll use OpenAI vision API as a fallback
         const base64 = buffer.toString('base64');
         extractedText = await analyzeMedicalImage(base64, mimetype);
+      } else if (mimetype === 'image/svg+xml') {
+        // For SVG files, extract text content directly and also use OpenAI vision
+        const svgContent = buffer.toString('utf-8');
+        // Try to extract text from SVG content
+        const textMatch = svgContent.match(/<text[^>]*>(.*?)<\/text>/gi);
+        let svgText = textMatch ? textMatch.map((t: string) => t.replace(/<[^>]*>/g, '')).join(' ') : '';
+        
+        if (svgText.length < 50) {
+          // If not enough text extracted, use OpenAI vision
+          const base64 = buffer.toString('base64');
+          extractedText = await analyzeMedicalImage(base64, mimetype);
+        } else {
+          extractedText = svgText;
+        }
       } else {
         // For images, try OCR first, then OpenAI vision as fallback
         try {

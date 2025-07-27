@@ -22,7 +22,7 @@ export default function FileUpload({ onAnalysisComplete, onError }: FileUploadPr
       formData.append('file', file);
       
       const response = await apiRequest('POST', '/api/reports/upload', formData);
-      return response.json();
+      return await response.json();
     },
     onSuccess: (data) => {
       toast({
@@ -63,13 +63,13 @@ export default function FileUpload({ onAnalysisComplete, onError }: FileUploadPr
   };
 
   const handleFileSelect = (file: File) => {
-    const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'application/pdf'];
     const maxSize = 10 * 1024 * 1024; // 10MB
 
     if (!allowedTypes.includes(file.type)) {
       toast({
         title: "Invalid File Type",
-        description: "Please upload JPEG, PNG, or PDF files only.",
+        description: "Please upload JPEG, PNG, SVG, or PDF files only.",
         variant: "destructive",
       });
       return;
