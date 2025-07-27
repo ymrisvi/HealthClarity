@@ -109,39 +109,40 @@ export default function Home() {
 
   return (
     <div className="min-h-screen medical-pattern medical-gradient">
-      {/* Enhanced Header */}
+      {/* Enhanced Header - Mobile Responsive */}
       <header className="glass-effect border-b border-white/20 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-3 rounded-xl shadow-lg">
-                <Activity className="w-8 h-8 text-white drop-shadow-sm" />
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-2 sm:p-3 rounded-xl shadow-lg">
+                <Activity className="w-6 h-6 sm:w-8 sm:h-8 text-white drop-shadow-sm" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold gradient-text">Health Clarity</h1>
-                <p className="text-sm text-slate-600">AI-powered medical analysis</p>
+                <h1 className="text-lg sm:text-2xl font-bold gradient-text">Health Clarity</h1>
+                <p className="text-xs sm:text-sm text-slate-600 hidden sm:block">AI-powered medical analysis</p>
               </div>
             </div>
-            <div className="flex items-center space-x-6">
-              <nav className="hidden md:flex space-x-8">
-                <a href="#upload" className="text-slate-700 hover:text-medical-blue font-medium transition-colors relative group">
+            <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
+              <nav className="hidden lg:flex space-x-6 xl:space-x-8">
+                <a href="#upload" className="text-slate-700 hover:text-medical-blue font-medium transition-colors relative group text-sm">
                   Upload Report
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-medical-blue transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="#medicine" className="text-slate-700 hover:text-medical-blue font-medium transition-colors relative group">
+                <a href="#medicine" className="text-slate-700 hover:text-medical-blue font-medium transition-colors relative group text-sm">
                   Medicine Lookup
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-healthcare-teal transition-all duration-300 group-hover:w-full"></span>
                 </a>
-
               </nav>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 sm:space-x-4">
                 {user?.isAdmin && (
                   <Button 
                     onClick={() => navigate('/admin')}
                     variant="outline"
-                    className="border-slate-300 hover:border-medical-blue"
+                    size="sm"
+                    className="border-slate-300 hover:border-medical-blue text-xs sm:text-sm px-2 sm:px-3 hidden sm:flex"
                   >
-                    Admin Panel
+                    <span className="hidden md:inline">Admin Panel</span>
+                    <span className="md:hidden">Admin</span>
                   </Button>
                 )}
                 <UserHeader onShowHistory={() => setShowHistory(true)} />
@@ -154,8 +155,8 @@ export default function Home() {
       {/* Medical Disclaimer Banner */}
       <MedicalDisclaimer />
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Content - Mobile Responsive */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         
         {/* Authentication Banner */}
         {usageLimitReached ? (
@@ -164,35 +165,44 @@ export default function Home() {
           <AuthBanner remainingUses={1} />
         ) : null}
         
-        {/* Enhanced Hero Section */}
-        <div className="text-center mb-12">
-          <div className="bg-gradient-to-br from-blue-600 to-teal-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl floating">
-            <Heart className="w-12 h-12 text-white drop-shadow-lg pulse-slow" />
+        {/* Enhanced Hero Section - Mobile Responsive */}
+        <div className="text-center mb-8 sm:mb-10 lg:mb-12">
+          <div className="bg-gradient-to-br from-blue-600 to-teal-600 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-2xl floating">
+            <Heart className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-white drop-shadow-lg pulse-slow" />
           </div>
-          <h2 className="text-5xl font-bold gradient-text mb-4">Understanding Your Health Information</h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold gradient-text mb-3 sm:mb-4 px-4">Understanding Your Health Information</h2>
+          <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed px-4">
             Upload your medical reports or search for medicine information to get clear, simple explanations powered by advanced AI technology.
           </p>
-          <div className="heartbeat-line w-48 h-1 mx-auto mt-6"></div>
+          <div className="heartbeat-line w-32 sm:w-40 lg:w-48 h-1 mx-auto mt-4 sm:mt-6"></div>
         </div>
 
-        {/* Main Content Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-12">
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-white/70 backdrop-blur-sm">
-            <TabsTrigger value="family" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Family Members</TabsTrigger>
-            <TabsTrigger value="reports" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Medical Reports</TabsTrigger>
-            <TabsTrigger value="medicine" className="text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white">Medicine Lookup</TabsTrigger>
+        {/* Main Content Tabs - Mobile Responsive */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mb-8 sm:mb-10 lg:mb-12">
+          <TabsList className="grid w-full grid-cols-3 mb-6 sm:mb-8 bg-white/70 backdrop-blur-sm h-12 sm:h-14">
+            <TabsTrigger value="family" className="text-xs sm:text-sm lg:text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white px-2">
+              <span className="hidden sm:inline">Family Members</span>
+              <span className="sm:hidden">Family</span>
+            </TabsTrigger>
+            <TabsTrigger value="reports" className="text-xs sm:text-sm lg:text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white px-2">
+              <span className="hidden sm:inline">Medical Reports</span>
+              <span className="sm:hidden">Reports</span>
+            </TabsTrigger>
+            <TabsTrigger value="medicine" className="text-xs sm:text-sm lg:text-base data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-teal-600 data-[state=active]:text-white px-2">
+              <span className="hidden sm:inline">Medicine Lookup</span>
+              <span className="sm:hidden">Medicine</span>
+            </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="family" className="space-y-6">
-            <Card className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
-              <div className="flex items-center mb-8">
-                <div className="bg-gradient-to-br from-purple-100 to-pink-200 p-4 rounded-2xl mr-6 shadow-lg">
-                  <Users className="w-10 h-10 text-purple-700 medical-icon" />
+          <TabsContent value="family" className="space-y-4 sm:space-y-6">
+            <Card className="medical-card p-6 sm:p-8 lg:p-10 glass-effect hover:shadow-2xl transition-all duration-500">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 sm:mb-8">
+                <div className="bg-gradient-to-br from-purple-100 to-pink-200 p-3 sm:p-4 rounded-2xl mb-4 sm:mb-0 sm:mr-4 lg:mr-6 shadow-lg">
+                  <Users className="w-8 h-8 sm:w-10 sm:h-10 text-purple-700 medical-icon" />
                 </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-slate-900">Family Member Management</h3>
-                  <p className="text-slate-600 text-lg">Add family members to track their medical reports with personal context</p>
+                <div className="text-center sm:text-left">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 mb-2">Family Member Management</h3>
+                  <p className="text-slate-600 text-sm sm:text-base lg:text-lg">Add family members to track their medical reports with personal context</p>
                 </div>
               </div>
 
@@ -206,23 +216,23 @@ export default function Home() {
                 }}
               />
               
-              <div className="mt-6 flex justify-center space-x-3">
-                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Individual Profiles</span>
-                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Separate Histories</span>
-                <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Context Matching</span>
+              <div className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
+                <span className="px-3 sm:px-4 py-1 sm:py-2 bg-purple-100 text-purple-800 rounded-full text-xs sm:text-sm font-medium">Individual Profiles</span>
+                <span className="px-3 sm:px-4 py-1 sm:py-2 bg-purple-100 text-purple-800 rounded-full text-xs sm:text-sm font-medium">Separate Histories</span>
+                <span className="px-3 sm:px-4 py-1 sm:py-2 bg-purple-100 text-purple-800 rounded-full text-xs sm:text-sm font-medium">Context Matching</span>
               </div>
             </Card>
           </TabsContent>
 
-          <TabsContent value="reports" className="space-y-6">
-            <Card id="upload" className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
-              <div className="flex items-center mb-8">
-                <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-2xl mr-6 shadow-lg">
-                  <FileText className="w-10 h-10 text-blue-700 medical-icon" />
+          <TabsContent value="reports" className="space-y-4 sm:space-y-6">
+            <Card id="upload" className="medical-card p-6 sm:p-8 lg:p-10 glass-effect hover:shadow-2xl transition-all duration-500">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 sm:mb-8">
+                <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 sm:p-4 rounded-2xl mb-4 sm:mb-0 sm:mr-4 lg:mr-6 shadow-lg">
+                  <FileText className="w-8 h-8 sm:w-10 sm:h-10 text-blue-700 medical-icon" />
                 </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-slate-900">Upload Medical Report</h3>
-                  <p className="text-slate-600 text-lg">Get AI-powered explanations of your lab results with person-specific context</p>
+                <div className="text-center sm:text-left">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 mb-2">Upload Medical Report</h3>
+                  <p className="text-slate-600 text-sm sm:text-base lg:text-lg">Get AI-powered explanations of your lab results with person-specific context</p>
                 </div>
               </div>
 
@@ -232,23 +242,23 @@ export default function Home() {
                 onPersonSelect={setSelectedPersonId}
               />
               
-              <div className="mt-6 flex justify-center space-x-3">
-                <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">ECG Reports</span>
-                <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Blood Tests</span>
-                <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">X-Rays</span>
+              <div className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
+                <span className="px-3 sm:px-4 py-1 sm:py-2 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm font-medium">ECG Reports</span>
+                <span className="px-3 sm:px-4 py-1 sm:py-2 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm font-medium">Blood Tests</span>
+                <span className="px-3 sm:px-4 py-1 sm:py-2 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm font-medium">X-Rays</span>
               </div>
             </Card>
           </TabsContent>
 
-          <TabsContent value="medicine" className="space-y-6">
-            <Card id="medicine" className="medical-card p-10 glass-effect hover:shadow-2xl transition-all duration-500">
-              <div className="flex items-center mb-8">
-                <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-4 rounded-2xl mr-6 shadow-lg">
-                  <Search className="w-10 h-10 text-teal-700 medical-icon" />
+          <TabsContent value="medicine" className="space-y-4 sm:space-y-6">
+            <Card id="medicine" className="medical-card p-6 sm:p-8 lg:p-10 glass-effect hover:shadow-2xl transition-all duration-500">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center mb-6 sm:mb-8">
+                <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-3 sm:p-4 rounded-2xl mb-4 sm:mb-0 sm:mr-4 lg:mr-6 shadow-lg">
+                  <Search className="w-8 h-8 sm:w-10 sm:h-10 text-teal-700 medical-icon" />
                 </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-slate-900">Medicine Information</h3>
-                  <p className="text-slate-600 text-lg">Learn about medicines in simple terms</p>
+                <div className="text-center sm:text-left">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 mb-2">Medicine Information</h3>
+                  <p className="text-slate-600 text-sm sm:text-base lg:text-lg">Learn about medicines in simple terms</p>
                 </div>
               </div>
 
@@ -342,29 +352,29 @@ export default function Home() {
 
       </main>
 
-      {/* Footer */}
+      {/* Footer - Mobile Responsive */}
       <footer className="bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+            <div className="sm:col-span-2 md:col-span-2">
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-4">
                 <div className="bg-blue-600 p-2 rounded-lg">
-                  <FileText className="w-6 h-6 text-white drop-shadow-sm" />
+                  <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-sm" />
                 </div>
-                <span className="text-xl font-bold">Health Clarity</span>
+                <span className="text-lg sm:text-xl font-bold">Health Clarity</span>
               </div>
-              <p className="text-slate-300 mb-4">
+              <p className="text-slate-300 mb-4 text-sm sm:text-base">
                 Making medical information accessible and understandable for everyone. Empowering patients with knowledge while emphasizing the importance of professional medical care.
               </p>
-              <div className="text-sm text-slate-400">
+              <div className="text-xs sm:text-sm text-slate-400">
                 <p className="font-medium mb-1">⚠️ Important Medical Disclaimer</p>
                 <p>This tool provides educational information only and should not replace professional medical advice, diagnosis, or treatment. Always consult qualified healthcare providers.</p>
               </div>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4">Features</h4>
-              <ul className="space-y-2 text-slate-300">
+              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Features</h4>
+              <ul className="space-y-1 sm:space-y-2 text-slate-300 text-sm sm:text-base">
                 <li><a href="#upload" className="hover:text-white transition-colors">Report Analysis</a></li>
                 <li><a href="#medicine" className="hover:text-white transition-colors">Medicine Lookup</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Simple Explanations</a></li>
@@ -373,18 +383,17 @@ export default function Home() {
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4">Legal & Support</h4>
-              <ul className="space-y-2 text-slate-300">
-
-                <li><button onClick={() => navigate('/contact')} className="hover:text-white transition-colors">Contact Us</button></li>
-                <li><button onClick={() => navigate('/privacy')} className="hover:text-white transition-colors">Privacy Policy</button></li>
-                <li><button onClick={() => navigate('/terms')} className="hover:text-white transition-colors">Terms of Service</button></li>
+              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Legal & Support</h4>
+              <ul className="space-y-1 sm:space-y-2 text-slate-300 text-sm sm:text-base">
+                <li><button onClick={() => navigate('/contact')} className="hover:text-white transition-colors text-left">Contact Us</button></li>
+                <li><button onClick={() => navigate('/privacy')} className="hover:text-white transition-colors text-left">Privacy Policy</button></li>
+                <li><button onClick={() => navigate('/terms')} className="hover:text-white transition-colors text-left">Terms of Service</button></li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
-            <p>&copy; 2025 MedReport Assistant. All rights reserved. This service is for educational purposes only.</p>
+          <div className="border-t border-slate-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-slate-400">
+            <p className="text-xs sm:text-sm">&copy; 2025 Health Clarity. All rights reserved. This service is for educational purposes only.</p>
           </div>
         </div>
       </footer>

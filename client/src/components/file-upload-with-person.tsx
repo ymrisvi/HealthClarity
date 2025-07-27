@@ -207,19 +207,19 @@ export function FileUploadWithPerson({
         onDragOver={handleDrag}
         onDrop={handleDrop}
       >
-        <CardContent className="p-8">
-          <div className="text-center space-y-4">
-            <div className="mx-auto w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-              <Upload className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        <CardContent className="p-4 sm:p-6 lg:p-8">
+          <div className="text-center space-y-3 sm:space-y-4">
+            <div className="mx-auto w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+              <Upload className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">
+              <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">
                 Upload Medical Report
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-3 sm:mb-4 px-2">
                 {isMobile 
-                  ? "Drag and drop, choose a file, or take a photo of your medical report"
+                  ? "Choose a file or take a photo of your medical report"
                   : "Drag and drop your medical report or click to browse"
                 }
               </p>
@@ -229,31 +229,33 @@ export function FileUploadWithPerson({
             </div>
 
             {selectedFile ? (
-              <div className="flex items-center justify-center space-x-2 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                <FileText className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-medium text-slate-900 dark:text-slate-100">
+              <div className="flex items-center justify-center space-x-2 p-2 sm:p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                <span className="text-xs sm:text-sm font-medium text-slate-900 dark:text-slate-100 truncate max-w-40 sm:max-w-none">
                   {selectedFile.name}
                 </span>
-                <span className="text-xs text-slate-500">
+                <span className="text-xs text-slate-500 whitespace-nowrap">
                   ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
                 </span>
               </div>
             ) : isMobile ? (
-              <div className="flex gap-3 flex-col sm:flex-row">
+              <div className="flex gap-2 sm:gap-3 flex-col sm:flex-row">
                 <Button
                   variant="outline"
+                  size="sm"
                   onClick={() => fileInputRef.current?.click()}
-                  className="border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 dark:hover:bg-blue-950/20"
+                  className="border-blue-200 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 dark:hover:bg-blue-950/20 text-xs sm:text-sm"
                 >
-                  <Upload className="w-4 h-4 mr-2" />
+                  <Upload className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   Choose File
                 </Button>
                 <Button
                   variant="outline"
+                  size="sm"
                   onClick={handleCameraCapture}
-                  className="border-green-200 text-green-700 hover:bg-green-50 dark:border-green-800 dark:text-green-300 dark:hover:bg-green-950/20"
+                  className="border-green-200 text-green-700 hover:bg-green-50 dark:border-green-800 dark:text-green-300 dark:hover:bg-green-950/20 text-xs sm:text-sm"
                 >
-                  <Camera className="w-4 h-4 mr-2" />
+                  <Camera className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   Take Photo
                 </Button>
               </div>

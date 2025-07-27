@@ -8,37 +8,40 @@ export default function Privacy() {
 
   return (
     <div className="min-h-screen medical-pattern medical-gradient">
-      {/* Header */}
+      {/* Mobile Responsive Header */}
       <header className="glass-effect border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-br from-green-500 to-teal-600 p-3 rounded-xl shadow-lg">
-                <Shield className="w-8 h-8 text-white" />
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="bg-gradient-to-br from-green-500 to-teal-600 p-2 sm:p-3 rounded-xl shadow-lg">
+                <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold gradient-text">Privacy Policy</h1>
-                <p className="text-sm text-slate-600">How we protect your information</p>
+                <h1 className="text-lg sm:text-2xl font-bold gradient-text">Privacy Policy</h1>
+                <p className="text-xs sm:text-sm text-slate-600 hidden sm:block">How we protect your information</p>
               </div>
             </div>
             <Button 
               onClick={() => navigate('/')}
               variant="outline"
-              className="border-slate-300 hover:border-medical-blue"
+              size="sm"
+              className="border-slate-300 hover:border-medical-blue px-2 sm:px-4"
             >
-              Back to Home
+              <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Back to Home</span>
+              <span className="sm:hidden">Back</span>
             </Button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Introduction */}
-        <div className="text-center mb-12">
-          <div className="bg-gradient-to-br from-green-500 to-teal-600 w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
-            <Lock className="w-8 h-8 text-white" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        {/* Introduction - Mobile Responsive */}
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="bg-gradient-to-br from-green-500 to-teal-600 w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-2xl">
+            <Lock className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
           </div>
-          <h2 className="text-3xl font-bold gradient-text mb-4">Your Privacy Matters</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold gradient-text mb-3 sm:mb-4 px-4">Your Privacy Matters</h2>
           <p className="text-lg text-slate-600 leading-relaxed">
             Last updated: January 27, 2025
           </p>
@@ -47,13 +50,13 @@ export default function Privacy() {
           </p>
         </div>
 
-        {/* Information We Collect */}
-        <Card className="medical-card glass-effect p-8 mb-8">
-          <div className="flex items-center mb-6">
-            <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl mr-4">
-              <Database className="w-8 h-8 text-blue-700" />
+        {/* Information We Collect - Mobile Responsive */}
+        <Card className="medical-card glass-effect p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center mb-4 sm:mb-6">
+            <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-2 sm:p-3 rounded-xl mb-3 sm:mb-0 sm:mr-4">
+              <Database className="w-6 h-6 sm:w-8 sm:h-8 text-blue-700" />
             </div>
-            <h3 className="text-2xl font-bold text-slate-900">Information We Collect</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900">Information We Collect</h3>
           </div>
           
           <div className="space-y-6">

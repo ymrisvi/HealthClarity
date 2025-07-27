@@ -160,16 +160,16 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Family Members</h3>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+        <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-100">Family Members</h3>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button onClick={handleAddNew} size="sm" className="bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Person
+            <Button onClick={handleAddNew} size="sm" className="bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 w-full sm:w-auto">
+              <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="text-xs sm:text-sm">Add Person</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md" aria-describedby="person-dialog-description">
+          <DialogContent className="sm:max-w-md mx-4 sm:mx-auto" aria-describedby="person-dialog-description">
             <DialogHeader>
               <DialogTitle>
                 {editingPerson ? "Edit Person" : "Add New Person"}
@@ -194,7 +194,7 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
                   )}
                 />
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
                     name="age"
@@ -238,7 +238,7 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
                   />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
                     name="height"
@@ -323,13 +323,13 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
               }`}
               onClick={() => showPersonSelector && onPersonSelect?.(person.id)}
             >
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-base flex items-center">
-                    <User className="w-4 h-4 mr-2 text-blue-600" />
-                    {person.name}
+              <CardHeader className="pb-2 px-3 sm:px-6 pt-3 sm:pt-6">
+                <div className="flex items-start sm:items-center justify-between flex-col sm:flex-row gap-2 sm:gap-0">
+                  <CardTitle className="text-sm sm:text-base flex items-center">
+                    <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 text-blue-600" />
+                    <span className="truncate">{person.name}</span>
                   </CardTitle>
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-1 self-end sm:self-auto">
                     <Button
                       size="sm"
                       variant="ghost"
@@ -337,6 +337,7 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
                         e.stopPropagation();
                         handleEdit(person);
                       }}
+                      className="h-6 w-6 sm:h-8 sm:w-8 p-0"
                     >
                       <Edit2 className="w-3 h-3" />
                     </Button>
@@ -347,21 +348,22 @@ export function PersonManagement({ selectedPersonId, onPersonSelect, showPersonS
                         e.stopPropagation();
                         handleDelete(person);
                       }}
+                      className="h-6 w-6 sm:h-8 sm:w-8 p-0"
                     >
                       <Trash2 className="w-3 h-3 text-red-500" />
                     </Button>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="pt-0">
-                <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground mb-3">
+              <CardContent className="pt-0 px-3 sm:px-6 pb-3 sm:pb-6">
+                <div className="grid grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
                   {person.age && <div>Age: {person.age}</div>}
                   {person.sex && <div>Sex: {person.sex}</div>}
                   {person.height && <div>Height: {person.height} cm</div>}
                   {person.weight && <div>Weight: {person.weight} kg</div>}
                 </div>
                 {showPersonSelector && (
-                  <div className="text-xs text-blue-600 font-medium bg-blue-50 px-3 py-1 rounded-full text-center">
+                  <div className="text-xs text-blue-600 font-medium bg-blue-50 px-2 sm:px-3 py-1 rounded-full text-center">
                     Click to upload medical report for {person.name}
                   </div>
                 )}
