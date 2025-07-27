@@ -331,18 +331,18 @@ export default function Home() {
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4">Support</h4>
+              <h4 className="text-lg font-semibold mb-4">Legal & Support</h4>
               <ul className="space-y-2 text-slate-300">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><button onClick={() => navigate('/about')} className="hover:text-white transition-colors">About Us</button></li>
+                <li><button onClick={() => navigate('/privacy')} className="hover:text-white transition-colors">Privacy Policy</button></li>
+                <li><button onClick={() => navigate('/terms')} className="hover:text-white transition-colors">Terms of Service</button></li>
+                <li><a href="mailto:legal@medreport-assistant.com" className="hover:text-white transition-colors">Contact Us</a></li>
               </ul>
             </div>
           </div>
           
           <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
-            <p>&copy; 2024 MedReport Assistant. All rights reserved. This service is for educational purposes only.</p>
+            <p>&copy; 2025 MedReport Assistant. All rights reserved. This service is for educational purposes only.</p>
           </div>
         </div>
       </footer>

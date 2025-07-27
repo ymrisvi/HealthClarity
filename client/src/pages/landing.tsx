@@ -3,9 +3,12 @@ import { Button } from "@/components/ui/button";
 import SocialLoginBanner from "@/components/social-login-banner";
 import MedicalDisclaimer from "@/components/medical-disclaimer";
 import MedicalHeroSection from "@/components/medical-hero-section";
-import { FileText, Search, Shield, Users, Zap, Clock, Activity, Heart, Stethoscope } from "lucide-react";
+import { FileText, Search, Shield, Users, Zap, Clock, Activity, Heart, Stethoscope, ChevronRight } from "lucide-react";
+import { useLocation } from "wouter";
 
 export default function Landing() {
+  const [location, navigate] = useLocation();
+  
   const handleLogin = () => {
     window.location.href = '/api/login';
   };
@@ -125,6 +128,113 @@ export default function Landing() {
           </Button>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-slate-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid md:grid-cols-4 gap-8">
+            {/* Company Info */}
+            <div className="md:col-span-2">
+              <div className="flex items-center mb-4">
+                <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-2 rounded-lg mr-3">
+                  <Activity className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-bold">MedReport Assistant</h3>
+              </div>
+              <p className="text-slate-400 mb-6 max-w-md">
+                AI-powered medical report analysis and medicine information, 
+                designed to help you understand your health in simple language.
+              </p>
+              <div className="bg-gradient-to-r from-red-100 to-orange-100 border border-red-200 rounded-lg p-4">
+                <div className="flex items-start space-x-3">
+                  <Shield className="w-5 h-5 text-red-600 mt-0.5" />
+                  <div>
+                    <p className="text-red-800 text-sm font-medium">Medical Disclaimer</p>
+                    <p className="text-red-700 text-xs mt-1">
+                      For educational purposes only. Always consult healthcare professionals for medical advice.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Product</h4>
+              <ul className="space-y-3">
+                <li>
+                  <button 
+                    onClick={handleLogin}
+                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    Report Analysis
+                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={handleLogin}
+                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    Medicine Search
+                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => navigate('/about')}
+                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    About Us
+                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal Links */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Legal</h4>
+              <ul className="space-y-3">
+                <li>
+                  <button 
+                    onClick={() => navigate('/privacy')}
+                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    Privacy Policy
+                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => navigate('/terms')}
+                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    Terms of Service
+                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </li>
+                <li>
+                  <a 
+                    href="mailto:legal@medreport-assistant.com"
+                    className="text-slate-400 hover:text-white transition-colors flex items-center group"
+                  >
+                    Contact
+                    <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-slate-800 mt-8 pt-8 text-center">
+            <p className="text-slate-400 text-sm">
+              © 2025 MedReport Assistant. All rights reserved. | Educational tool - not a substitute for professional medical advice.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -78,6 +78,11 @@ The application follows a modern full-stack architecture with clear separation b
   - `MedicineSearch`: Medicine lookup with search suggestions
   - `ResultsDisplay`: Structured display of AI analysis results
   - `MedicalDisclaimer`: Important safety information
+- **Legal & Compliance Pages**:
+  - `About`: Comprehensive about page explaining the platform's mission and features
+  - `Privacy`: Detailed privacy policy covering data handling and user rights
+  - `Terms`: Complete terms of service with medical disclaimers and usage guidelines
+  - Footer navigation links to all legal pages from landing and home pages
 
 ## Data Flow
 

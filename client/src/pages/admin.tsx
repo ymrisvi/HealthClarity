@@ -60,7 +60,7 @@ export default function AdminDashboard() {
   const [location, navigate] = useLocation();
   const { toast } = useToast();
 
-  console.log('AdminDashboard render - user:', user, 'isAuthenticated:', isAuthenticated);
+
 
   // Check if user is admin
   useEffect(() => {

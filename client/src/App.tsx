@@ -7,6 +7,9 @@ import Home from "@/pages/home";
 import Landing from "@/pages/landing";
 import NotFound from "@/pages/not-found";
 import AdminDashboard from "@/pages/admin";
+import About from "@/pages/about";
+import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
 import { useAuth } from "@/hooks/useAuth";
 
 function Router() {
@@ -25,11 +28,14 @@ function Router() {
     );
   }
 
-  console.log('Router render - isAuthenticated:', isAuthenticated, 'isLoading:', isLoading);
+
 
   return (
     <Switch>
       <Route path="/admin" component={AdminDashboard} />
+      <Route path="/about" component={About} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
       <Route path="/" component={isAuthenticated ? Home : Landing} />
       <Route component={NotFound} />
     </Switch>
