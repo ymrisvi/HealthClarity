@@ -20,8 +20,8 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-3 rounded-xl mr-4 shadow-lg">
-                <Activity className="w-8 h-8 text-white" />
+              <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-3 rounded-xl mr-4 shadow-lg">
+                <Activity className="w-8 h-8 text-white drop-shadow-sm" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold gradient-text">MedReport Assistant</h1>
@@ -64,8 +64,8 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="medical-card p-8 text-center glass-effect">
-              <div className="bg-gradient-to-br from-blue-100 to-blue-200 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <FileText className="w-10 h-10 text-blue-700 medical-icon" />
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <FileText className="w-10 h-10 text-white drop-shadow-sm" />
               </div>
               <h3 className="text-2xl font-bold text-slate-900 mb-4">Advanced Report Analysis</h3>
               <p className="text-slate-600 text-lg leading-relaxed">
@@ -80,8 +80,8 @@ export default function Landing() {
             </Card>
 
             <Card className="medical-card p-8 text-center glass-effect">
-              <div className="bg-gradient-to-br from-teal-100 to-teal-200 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Search className="w-10 h-10 text-teal-700 medical-icon" />
+              <div className="bg-gradient-to-br from-teal-600 to-teal-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <Search className="w-10 h-10 text-white drop-shadow-sm" />
               </div>
               <h3 className="text-2xl font-bold text-slate-900 mb-4">Comprehensive Medicine Database</h3>
               <p className="text-slate-600 text-lg leading-relaxed">
@@ -96,8 +96,8 @@ export default function Landing() {
             </Card>
 
             <Card className="medical-card p-8 text-center glass-effect">
-              <div className="bg-gradient-to-br from-green-100 to-green-200 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Shield className="w-10 h-10 text-green-700 medical-icon" />
+              <div className="bg-gradient-to-br from-green-600 to-green-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <Shield className="w-10 h-10 text-white drop-shadow-sm" />
               </div>
               <h3 className="text-2xl font-bold text-slate-900 mb-4">Enterprise-Grade Security</h3>
               <p className="text-slate-600 text-lg leading-relaxed">

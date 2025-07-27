@@ -31,9 +31,9 @@ export default function MedicalHeroSection({ onLoginClick }: MedicalHeroSectionP
           {/* Hero Icon */}
           <div className="mb-8 flex justify-center">
             <div className="relative">
-              <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-6 rounded-3xl shadow-2xl">
+              <div className="bg-gradient-to-br from-blue-600 to-teal-600 p-6 rounded-3xl shadow-2xl">
                 <div className="bg-white p-4 rounded-2xl">
-                  <FileText className="w-16 h-16 text-medical-blue medical-icon" />
+                  <FileText className="w-16 h-16 text-blue-600 drop-shadow-sm" />
                 </div>
               </div>
               <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
@@ -73,8 +73,8 @@ export default function MedicalHeroSection({ onLoginClick }: MedicalHeroSectionP
         {/* Feature Cards */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           <Card className="medical-card p-8 text-center glass-effect">
-            <div className="bg-gradient-to-br from-blue-100 to-blue-200 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <FileText className="w-10 h-10 text-medical-blue medical-icon" />
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <FileText className="w-10 h-10 text-white drop-shadow-sm" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900 mb-4">Smart Report Analysis</h3>
             <p className="text-slate-600 text-lg leading-relaxed">
@@ -84,8 +84,8 @@ export default function MedicalHeroSection({ onLoginClick }: MedicalHeroSectionP
           </Card>
 
           <Card className="medical-card p-8 text-center glass-effect">
-            <div className="bg-gradient-to-br from-teal-100 to-teal-200 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Heart className="w-10 h-10 text-healthcare-teal medical-icon" />
+            <div className="bg-gradient-to-br from-teal-600 to-teal-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <Heart className="w-10 h-10 text-white drop-shadow-sm" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900 mb-4">Medicine Information</h3>
             <p className="text-slate-600 text-lg leading-relaxed">
@@ -95,8 +95,8 @@ export default function MedicalHeroSection({ onLoginClick }: MedicalHeroSectionP
           </Card>
 
           <Card className="medical-card p-8 text-center glass-effect">
-            <div className="bg-gradient-to-br from-green-100 to-green-200 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Shield className="w-10 h-10 text-mint-green medical-icon" />
+            <div className="bg-gradient-to-br from-green-600 to-green-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <Shield className="w-10 h-10 text-white drop-shadow-sm" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900 mb-4">Secure & Private</h3>
             <p className="text-slate-600 text-lg leading-relaxed">
