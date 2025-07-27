@@ -1,79 +1,25 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, Send, ArrowLeft, Heart } from "lucide-react";
+import { Mail, ArrowLeft, Heart, Copy, ExternalLink } from "lucide-react";
 import { useLocation } from "wouter";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/useAuth";
-
-interface ContactForm {
-  name: string;
-  email: string;
-  subject: string;
-  category: string;
-  message: string;
-}
 
 export default function Contact() {
   const [location, navigate] = useLocation();
   const { toast } = useToast();
-  const { user } = useAuth();
+
+  const emailAddress = "mohideenrisviy@gmail.com";
   
-  const [formData, setFormData] = useState<ContactForm>({
-    name: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : "",
-    email: user?.email || "",
-    subject: "",
-    category: "",
-    message: ""
-  });
-
-  const contactMutation = useMutation({
-    mutationFn: async (data: ContactForm) => {
-      return apiRequest("POST", "/api/contact", data);
-    },
-    onSuccess: () => {
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for contacting us. We'll get back to you soon.",
-      });
-      setFormData({
-        name: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : "",
-        email: user?.email || "",
-        subject: "",
-        category: "",
-        message: ""
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to send message. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
-      return;
-    }
-    contactMutation.mutate(formData);
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(emailAddress);
+    toast({
+      title: "Email Copied!",
+      description: "The email address has been copied to your clipboard.",
+    });
   };
 
-  const handleChange = (field: keyof ContactForm, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const openEmailClient = () => {
+    window.location.href = `mailto:${emailAddress}?subject=MedReport Assistant Inquiry`;
   };
 
   return (
@@ -104,142 +50,70 @@ export default function Contact() {
       </header>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Info */}
-          <div>
-            <div className="mb-8">
-              <div className="bg-gradient-to-br from-blue-600 to-teal-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                <Heart className="w-8 h-8 text-white drop-shadow-sm" />
-              </div>
-              <h2 className="text-3xl font-bold gradient-text mb-4">Get in Touch</h2>
-              <p className="text-slate-600 text-lg leading-relaxed">
-                Have questions about our medical report analysis? Need help understanding a feature? 
-                Want to provide feedback or report an issue? We're here to help!
-              </p>
+        <div className="max-w-2xl mx-auto">
+          {/* Main Contact Section */}
+          <div className="text-center mb-12">
+            <div className="bg-gradient-to-br from-blue-600 to-teal-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+              <Heart className="w-10 h-10 text-white drop-shadow-sm" />
             </div>
-
-            <div className="space-y-6">
-              <Card className="p-6 glass-effect border-white/20">
-                <h3 className="text-xl font-semibold mb-3 text-slate-800">What can we help you with?</h3>
-                <ul className="space-y-2 text-slate-600">
-                  <li>• Questions about medical report analysis</li>
-                  <li>• Medicine information inquiries</li>
-                  <li>• Technical support and troubleshooting</li>
-                  <li>• Feature requests and suggestions</li>
-                  <li>• Account and billing questions</li>
-                  <li>• General feedback</li>
-                </ul>
-              </Card>
-
-              <Card className="p-6 glass-effect border-white/20">
-                <h3 className="text-xl font-semibold mb-3 text-slate-800">Response Time</h3>
-                <p className="text-slate-600">
-                  We typically respond to all inquiries within 24-48 hours during business days. 
-                  For urgent medical questions, please consult with a healthcare professional directly.
-                </p>
-              </Card>
-            </div>
+            <h2 className="text-4xl font-bold gradient-text mb-6">Get in Touch</h2>
+            <p className="text-slate-600 text-xl leading-relaxed mb-8">
+              For any questions, support, feedback, or inquiries about MedReport Assistant, 
+              please feel free to reach out directly via email.
+            </p>
           </div>
 
-          {/* Contact Form */}
-          <Card className="p-8 glass-effect border-white/20">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name" className="text-slate-700 font-medium">
-                    Full Name *
-                  </Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleChange('name', e.target.value)}
-                    placeholder="Enter your full name"
-                    required
-                    className="mt-1"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email" className="text-slate-700 font-medium">
-                    Email Address *
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleChange('email', e.target.value)}
-                    placeholder="Enter your email"
-                    required
-                    className="mt-1"
-                  />
-                </div>
+          {/* Email Contact Card */}
+          <Card className="p-8 glass-effect border-white/20 text-center mb-8">
+            <div className="bg-gradient-to-br from-blue-600 to-teal-600 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <Mail className="w-8 h-8 text-white drop-shadow-sm" />
+            </div>
+            
+            <h3 className="text-2xl font-bold text-slate-800 mb-4">Email Us Directly</h3>
+            
+            <div className="bg-slate-50 rounded-lg p-6 mb-6">
+              <p className="text-sm text-slate-600 mb-3 font-medium">Contact Email:</p>
+              <p className="text-2xl font-bold text-slate-800 mb-4 break-all">{emailAddress}</p>
+              
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button 
+                  onClick={openEmailClient}
+                  className="bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Open Email Client
+                </Button>
+                <Button 
+                  onClick={copyToClipboard}
+                  variant="outline"
+                  className="border-slate-300 hover:border-blue-600"
+                >
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy Email
+                </Button>
               </div>
+            </div>
 
-              <div>
-                <Label htmlFor="category" className="text-slate-700 font-medium">
-                  Category
-                </Label>
-                <Select value={formData.category} onValueChange={(value) => handleChange('category', value)}>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="general">General Inquiry</SelectItem>
-                    <SelectItem value="technical">Technical Support</SelectItem>
-                    <SelectItem value="feature">Feature Request</SelectItem>
-                    <SelectItem value="billing">Billing Question</SelectItem>
-                    <SelectItem value="feedback">Feedback</SelectItem>
-                    <SelectItem value="bug">Bug Report</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <p className="text-slate-600">
+              We typically respond to all inquiries within 24-48 hours during business days.
+            </p>
+          </Card>
 
-              <div>
-                <Label htmlFor="subject" className="text-slate-700 font-medium">
-                  Subject *
-                </Label>
-                <Input
-                  id="subject"
-                  value={formData.subject}
-                  onChange={(e) => handleChange('subject', e.target.value)}
-                  placeholder="Brief description of your inquiry"
-                  required
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="message" className="text-slate-700 font-medium">
-                  Message *
-                </Label>
-                <Textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => handleChange('message', e.target.value)}
-                  placeholder="Please describe your requirements, questions, or feedback in detail..."
-                  rows={6}
-                  required
-                  className="mt-1"
-                />
-              </div>
-
-              <Button 
-                type="submit" 
-                disabled={contactMutation.isPending}
-                className="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-semibold py-3"
-              >
-                {contactMutation.isPending ? (
-                  <div className="flex items-center">
-                    <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></div>
-                    Sending...
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center">
-                    <Send className="w-4 h-4 mr-2" />
-                    Send Message
-                  </div>
-                )}
-              </Button>
-            </form>
+          {/* What We Can Help With */}
+          <Card className="p-6 glass-effect border-white/20 mb-8">
+            <h3 className="text-xl font-semibold mb-4 text-slate-800 text-center">What can we help you with?</h3>
+            <div className="grid sm:grid-cols-2 gap-3 text-slate-600">
+              <ul className="space-y-2">
+                <li>• Questions about medical report analysis</li>
+                <li>• Medicine information inquiries</li>
+                <li>• Technical support and troubleshooting</li>
+              </ul>
+              <ul className="space-y-2">
+                <li>• Feature requests and suggestions</li>
+                <li>• Account and billing questions</li>
+                <li>• General feedback and improvements</li>
+              </ul>
+            </div>
           </Card>
         </div>
 

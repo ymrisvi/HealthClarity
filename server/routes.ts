@@ -355,62 +355,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Contact form route
-  app.post('/api/contact', async (req, res) => {
-    try {
-      const { name, email, subject, category, message } = req.body;
 
-      if (!name || !email || !subject || !message) {
-        return res.status(400).json({ message: "Missing required fields" });
-      }
-
-      if (!process.env.SENDGRID_API_KEY) {
-        return res.status(500).json({ message: "Email service not configured" });
-      }
-
-      const emailContent = `
-New Contact Form Submission
-
-Name: ${name}
-Email: ${email}
-Category: ${category || 'Not specified'}
-Subject: ${subject}
-
-Message:
-${message}
-
----
-This message was sent from the MedReport Assistant contact form.
-Reply directly to this email to respond to the user.
-      `.trim();
-
-      await mailService.send({
-        to: 'mohideenrisviy@gmail.com',
-        from: 'mohideenrisviy@gmail.com', // Use the same email as both sender and recipient
-        replyTo: email, // User can reply directly to the sender
-        subject: `Contact Form: ${subject}`,
-        text: emailContent,
-        html: emailContent.replace(/\n/g, '<br>')
-      });
-
-      res.json({ message: "Message sent successfully" });
-    } catch (error: any) {
-      console.error("Error sending contact email:", error);
-      
-      // Log the specific SendGrid error for debugging
-      if (error.response && error.response.body) {
-        console.error("SendGrid error details:", JSON.stringify(error.response.body, null, 2));
-      }
-      
-      // Return more specific error message
-      let errorMessage = "Failed to send message";
-      if (error.code === 403) {
-        errorMessage = "Email service configuration issue. Please contact support.";
-      }
-      
-      res.status(500).json({ message: errorMessage });
-    }
-  });
 
   const httpServer = createServer(app);
   return httpServer;
