@@ -8,7 +8,7 @@ import UserHeader from "@/components/user-header";
 import HistoryView from "@/components/history-view";
 import SocialLoginBanner from "@/components/social-login-banner";
 import { Card } from "@/components/ui/card";
-import { FileText, Search, Shield, Info, Users, Lock } from "lucide-react";
+import { FileText, Search, Shield, Info, Users, Lock, Activity, Heart } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { isUsageLimitError } from "@/lib/authUtils";
 
@@ -100,30 +100,33 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-slate-200">
+    <div className="min-h-screen medical-pattern medical-gradient">
+      {/* Enhanced Header */}
+      <header className="glass-effect border-b border-white/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="bg-medical-blue p-2 rounded-lg">
-                <FileText className="w-8 h-8 text-white" />
+              <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-3 rounded-xl shadow-lg">
+                <Activity className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900">MedReport Assistant</h1>
-                <p className="text-sm text-slate-600">Understanding medical reports made simple</p>
+                <h1 className="text-2xl font-bold gradient-text">MedReport Assistant</h1>
+                <p className="text-sm text-slate-600">AI-powered medical analysis</p>
               </div>
             </div>
             <div className="flex items-center space-x-6">
               <nav className="hidden md:flex space-x-8">
-                <a href="#upload" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
+                <a href="#upload" className="text-slate-700 hover:text-medical-blue font-medium transition-colors relative group">
                   Upload Report
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-medical-blue transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="#medicine" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
+                <a href="#medicine" className="text-slate-700 hover:text-medical-blue font-medium transition-colors relative group">
                   Medicine Lookup
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-healthcare-teal transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="#about" className="text-slate-700 hover:text-medical-blue font-medium transition-colors">
+                <a href="#about" className="text-slate-700 hover:text-medical-blue font-medium transition-colors relative group">
                   About
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-mint-green transition-all duration-300 group-hover:w-full"></span>
                 </a>
               </nav>
               <UserHeader onShowHistory={() => setShowHistory(true)} />
@@ -145,26 +148,30 @@ export default function Home() {
           <AuthBanner remainingUses={1} />
         ) : null}
         
-        {/* Hero Section */}
+        {/* Enhanced Hero Section */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">Understanding Your Health Information</h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Upload your medical reports or search for medicine information to get clear, simple explanations without complex medical jargon.
+          <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl floating">
+            <Heart className="w-12 h-12 text-white pulse-slow" />
+          </div>
+          <h2 className="text-5xl font-bold gradient-text mb-4">Understanding Your Health Information</h2>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            Upload your medical reports or search for medicine information to get clear, simple explanations powered by advanced AI technology.
           </p>
+          <div className="heartbeat-line w-48 h-1 mx-auto mt-6"></div>
         </div>
 
         {/* Feature Cards */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           
           {/* Upload Medical Reports */}
-          <Card id="upload" className="p-8 shadow-lg border border-slate-200">
-            <div className="flex items-center mb-6">
-              <div className="bg-medical-blue/10 p-3 rounded-xl mr-4">
-                <FileText className="w-8 h-8 text-medical-blue" />
+          <Card id="upload" className="medical-card p-10 glass-effect">
+            <div className="flex items-center mb-8">
+              <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-2xl mr-6 shadow-lg">
+                <FileText className="w-10 h-10 text-medical-blue medical-icon" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-slate-900">Upload Medical Report</h3>
-                <p className="text-slate-600">Get simple explanations of your lab results</p>
+                <h3 className="text-3xl font-bold text-slate-900">Upload Medical Report</h3>
+                <p className="text-slate-600 text-lg">Get AI-powered explanations of your lab results</p>
               </div>
             </div>
 
@@ -172,17 +179,23 @@ export default function Home() {
               onAnalysisComplete={handleReportAnalysis} 
               onError={handleError}
             />
+            
+            <div className="mt-6 flex justify-center space-x-3">
+              <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">ECG Reports</span>
+              <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Blood Tests</span>
+              <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">X-Rays</span>
+            </div>
           </Card>
 
           {/* Medicine Lookup */}
-          <Card id="medicine" className="p-8 shadow-lg border border-slate-200">
-            <div className="flex items-center mb-6">
-              <div className="bg-healthcare-teal/10 p-3 rounded-xl mr-4">
-                <Search className="w-8 h-8 text-healthcare-teal" />
+          <Card id="medicine" className="medical-card p-10 glass-effect">
+            <div className="flex items-center mb-8">
+              <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-4 rounded-2xl mr-6 shadow-lg">
+                <Search className="w-10 h-10 text-healthcare-teal medical-icon" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-slate-900">Medicine Information</h3>
-                <p className="text-slate-600">Learn about medicines in simple terms</p>
+                <h3 className="text-3xl font-bold text-slate-900">Medicine Information</h3>
+                <p className="text-slate-600 text-lg">Learn about medicines in simple terms</p>
               </div>
             </div>
 
@@ -190,6 +203,12 @@ export default function Home() {
               onSearchComplete={handleMedicineResult}
               onError={handleError}
             />
+            
+            <div className="mt-6 flex justify-center space-x-3">
+              <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Uses & Effects</span>
+              <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Side Effects</span>
+              <span className="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">Interactions</span>
+            </div>
           </Card>
         </div>
 

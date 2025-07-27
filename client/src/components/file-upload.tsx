@@ -106,12 +106,12 @@ export default function FileUpload({ onAnalysisComplete, onError }: FileUploadPr
 
   return (
     <div className="space-y-6">
-      {/* Upload Area */}
+      {/* Enhanced Upload Area */}
       <div
-        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
+        className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-300 medical-card ${
           dragOver 
-            ? 'border-medical-blue bg-blue-50 scale-105' 
-            : 'border-slate-300 hover:border-medical-blue hover:bg-blue-50'
+            ? 'border-medical-blue bg-gradient-to-br from-blue-50 to-blue-100 scale-105 shadow-xl' 
+            : 'border-slate-300 hover:border-medical-blue hover:bg-gradient-to-br hover:from-slate-50 hover:to-blue-50 hover:shadow-lg'
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -122,57 +122,67 @@ export default function FileUpload({ onAnalysisComplete, onError }: FileUploadPr
           ref={fileInputRef}
           type="file"
           className="hidden"
-          accept=".jpg,.jpeg,.png,.pdf"
+          accept=".jpg,.jpeg,.png,.svg,.pdf"
           onChange={handleFileInputChange}
         />
         
-        <Upload className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-        <h4 className="text-lg font-semibold text-slate-900 mb-2">
+        <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-6 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg floating">
+          <Upload className="w-10 h-10 text-white" />
+        </div>
+        
+        <h4 className="text-2xl font-bold text-slate-900 mb-3">
           Drop your medical report here
         </h4>
-        <p className="text-slate-500 mb-4">or click to browse files</p>
+        <p className="text-lg text-slate-600 mb-6">or click to browse and select your files</p>
         
-        <div className="flex flex-wrap justify-center gap-2 text-sm text-slate-400 mb-4">
-          <span className="bg-slate-100 px-3 py-1 rounded-full">ECG</span>
-          <span className="bg-slate-100 px-3 py-1 rounded-full">X-Ray</span>
-          <span className="bg-slate-100 px-3 py-1 rounded-full">Blood Test</span>
-          <span className="bg-slate-100 px-3 py-1 rounded-full">MRI</span>
-          <span className="bg-slate-100 px-3 py-1 rounded-full">CT Scan</span>
+        <div className="flex flex-wrap justify-center gap-3 mb-6">
+          <span className="bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 px-4 py-2 rounded-full text-sm font-medium shadow-sm">ECG Reports</span>
+          <span className="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-800 px-4 py-2 rounded-full text-sm font-medium shadow-sm">X-Ray Images</span>
+          <span className="bg-gradient-to-r from-green-100 to-green-200 text-green-800 px-4 py-2 rounded-full text-sm font-medium shadow-sm">Blood Tests</span>
+          <span className="bg-gradient-to-r from-purple-100 to-purple-200 text-purple-800 px-4 py-2 rounded-full text-sm font-medium shadow-sm">MRI Scans</span>
+          <span className="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800 px-4 py-2 rounded-full text-sm font-medium shadow-sm">CT Scans</span>
         </div>
         
         <Button 
-          className="bg-medical-blue hover:bg-blue-700 text-white"
+          className="bg-gradient-to-r from-medical-blue to-healthcare-teal hover:from-blue-700 hover:to-teal-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
           onClick={(e) => {
             e.stopPropagation();
             openFileDialog();
           }}
         >
-          Choose File
+          <FileText className="w-5 h-5 mr-2" />
+          Choose Medical File
         </Button>
+        
+        <p className="text-sm text-slate-500 mt-4">
+          Supports JPEG, PNG, SVG, PDF files • Maximum size: 10MB
+        </p>
       </div>
 
-      {/* Selected File */}
+      {/* Enhanced Selected File */}
       {selectedFile && (
-        <div className="bg-slate-50 rounded-xl p-4">
+        <div className="glass-effect rounded-2xl p-6 medical-card">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <FileText className="w-8 h-8 text-medical-blue" />
+            <div className="flex items-center space-x-4">
+              <div className="bg-gradient-to-br from-medical-blue to-healthcare-teal p-3 rounded-xl shadow-lg">
+                <FileText className="w-8 h-8 text-white" />
+              </div>
               <div>
-                <p className="font-medium text-slate-900">{selectedFile.name}</p>
-                <p className="text-sm text-slate-500">
-                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                <p className="font-bold text-slate-900 text-lg">{selectedFile.name}</p>
+                <p className="text-slate-600">
+                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB • Ready for analysis
                 </p>
               </div>
             </div>
             <Button
               onClick={handleUpload}
               disabled={uploadMutation.isPending}
-              className="bg-medical-blue hover:bg-blue-700 text-white"
+              className="bg-gradient-to-r from-medical-blue to-healthcare-teal hover:from-blue-700 hover:to-teal-700 text-white px-6 py-3 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               {uploadMutation.isPending ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Analyzing...
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Analyzing with AI...
                 </>
               ) : (
                 'Analyze Report'
